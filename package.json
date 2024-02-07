@@ -1,27 +1,46 @@
 {
-  "name": "crypto-trading",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "react": "^18",
-    "react-dom": "^18",
-    "next": "14.1.0"
-  },
-  "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "autoprefixer": "^10.0.1",
-    "postcss": "^8",
-    "tailwindcss": "^3.3.0",
-    "eslint": "^8",
-    "eslint-config-next": "14.1.0"
-  }
+	"name": "crypto-trading",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint"
+	},
+	"husky": {
+		"hooks": {
+			"commit-msg": "commitlint -E HUSKY_GIT_PARAMS -g './config/git/commitlint.js'"
+		}
+	},
+	"config": {
+		"commitizen": {
+			"path": "node_modules/cz-customizable"
+		},
+		"cz-customizable": {
+			"config": "config/git/commitizen.js"
+		}
+	},
+	"dependencies": {
+		"next": "14.1.0",
+		"react": "^18",
+		"react-dom": "^18"
+	},
+	"devDependencies": {
+		"@commitlint/cli": "^18.6.0",
+		"@types/node": "^20",
+		"@types/react": "^18",
+		"@types/react-dom": "^18",
+		"autoprefixer": "^10.0.1",
+		"cz-customizable": "^7.0.0",
+		"eslint": "^8",
+		"eslint-config-next": "14.1.0",
+		"eslint-config-prettier": "^9.1.0",
+		"husky": "^9.0.10",
+		"postcss": "^8",
+		"prettier": "^3.2.5",
+		"prettier-plugin-tailwindcss": "^0.5.11",
+		"tailwindcss": "^3.3.0",
+		"typescript": "^5"
+	}
 }
