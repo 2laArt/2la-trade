@@ -1,19 +1,25 @@
 import type { Config } from 'tailwindcss'
 
+const colors = {
+  primary: '#1F2125',
+  white: '#DAD9DC',
+  gray: '#35373B',
+  'light-gray': '#66686B',
+  black: '#090909',
+  blue: '#1D64EC',
+  'light-blue': '#84A3E2',
+  green: '#0B9A55',
+  'blue-gray': '#808EA9',
+  orange: '#EB750D',
+}
+
 const config: Config = {
-  content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
+  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
-    extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-      },
+    colors: {
+      ...colors,
     },
+    extend: {},
   },
   plugins: [],
 }
