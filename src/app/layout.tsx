@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning={true}>
-      <body className={cn(inter.className)}>
+      <body className={cn(inter.className, ' bg-background antialiased ')}>
         <AppProvider>{children}</AppProvider>
       </body>
     </html>

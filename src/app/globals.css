@@ -76,8 +76,30 @@
   }
   body {
     @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
     font-feature-settings:
       'rlig' 1,
       'calt' 1;
   }
+}
+body::-webkit-scrollbar {
+  width: 12px;
+}
+
+body::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+}
+
+body::-webkit-scrollbar-thumb {
+  @apply rounded-3xl;
+  -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+}
+[class^='dark'] body::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
+}
+[class^='dark'] body::-webkit-scrollbar-thumb {
+  @apply rounded-3xl;
+  -webkit-box-shadow: inset 0 0 3px rgba(255, 255, 255, 0.4);
 }
