@@ -1,7 +1,6 @@
-import { FC } from 'react'
+import { type NextPage } from 'next'
 
-const Dashboard: FC = () => {
-  return <div>Dashboard</div>
+const Dashboard: NextPage = () => {
+  return <div> dashboard</div>
 }
-
 export default Dashboard

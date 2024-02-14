@@ -4,7 +4,7 @@ import './globals.css'
 import { AppProvider } from './providers'
 import { cn } from '@/shared/lib'
 
-const inter = Montserrat({ subsets: ['latin'] })
+const inter = Montserrat({ subsets: ['latin'], variable: '--font' })
 
 export const metadata: Metadata = {
   title: 'Crypto Trading',

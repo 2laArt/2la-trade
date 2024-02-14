@@ -67,8 +67,8 @@ const config: Config = {
         sm: 'calc(var(--radius) - 4px)',
       },
       fontFamily: {
-        sans: ['var(--font-sans)', ...fontFamily.sans],
-        heading: ['var(--font-heading)', ...fontFamily.sans],
+        sans: ['var(--font)', ...fontFamily.mono],
+        heading: ['var(--font-heading)', ...fontFamily.mono],
       },
       keyframes: {
         'accordion-down': {

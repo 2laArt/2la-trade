@@ -1,7 +1,18 @@
-import { FC } from 'react'
+/* eslint-disable @next/next/no-img-element */
 
-const Home: FC = () => {
-  return <div>Home</div>
+import { CoinTable } from '@/widget/coin-table'
+import { NextPage } from 'next'
+
+const Home: NextPage<{
+  searchParams: {
+    page: string
+    limit: string
+  }
+}> = async ({ searchParams: { limit, page } }) => {
+  return (
+    <div>
+      <CoinTable />
+    </div>
+  )
 }
-
 export default Home
