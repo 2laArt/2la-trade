@@ -79,10 +79,15 @@ const config: Config = {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' },
         },
+        'chart-show': {
+          from: { 'stroke-dashoffset': '--chart-len' },
+          to: { 'stroke-dashoffset': '0' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'chart-show': 'chart-show 2s ease-in forwards',
       },
     },
   },

@@ -3,7 +3,7 @@ import { type FC } from 'react'
 import { useMediaQuery } from 'react-responsive'
 import { CoinListProvider, useCoinList } from '../context'
 import { percentageChange, presentationPrice } from '../lib'
-import { formatToCurrency } from '@/shared/lib'
+import { cn, formatToCurrency } from '@/shared/lib'
 import { Button } from '@/shared/ui'
 import {
   Table,
@@ -19,13 +19,17 @@ import {
   ChevronDownIcon,
   DotsHorizontalIcon,
 } from '@radix-ui/react-icons'
+import { SmallChart } from './small-chart'
 
 const rowStyle = ''
 
 export const CoinTableUI: FC = () => {
   // const isDesktop = useMediaQuery({ query: '(min-width: 768px)' })
   const { coinList } = useCoinList()
-
+  const stylePercent = (percent: number) =>
+    percent > 0
+      ? 'text-green-500 dark:text-green-600'
+      : 'text-red-600 dark:text-red-700'
   return (
     <Table className="dark:bg-slate-900 bg-white font-medium">
       <TableHeader className="border-b-2 border-muted dark:border-background pointer-events-none">
@@ -36,6 +40,7 @@ export const CoinTableUI: FC = () => {
           <TableHead>24H Change</TableHead>
           <TableHead>24H Volume</TableHead>
           <TableHead>Market Cap</TableHead>
+          <TableHead>7D Chart</TableHead>
           <TableHead className="pr-5" />
         </TableRow>
       </TableHeader>
@@ -51,24 +56,29 @@ export const CoinTableUI: FC = () => {
                 {coin.symbol.slice(0, 3)}
               </span>
               <span className="inline-block">
-                {coin.name} <br />{' '}
+                {coin.name} <br />
                 <span className="font-normal">{coin.symbol}</span>
               </span>
             </TableCell>
             <TableCell>
               $ {formatToCurrency(coin.usd_price, { maximumFractionDigits: 2 })}
             </TableCell>
-            <TableCell
-              className={
-                coin.usd_price_change_24h > 0
-                  ? 'text-green-500 dark:text-green-600'
-                  : 'text-red-600 dark:text-red-700'
-              }
-            >
+            <TableCell className={stylePercent(coin.usd_price_change_24h)}>
               {percentageChange(coin.usd_price_change_24h)}
             </TableCell>
             <TableCell>{presentationPrice(coin.usd_volume_24h, '$')}</TableCell>
             <TableCell>{presentationPrice(coin.usd_marketcap, '$')}</TableCell>
+            <TableCell>
+              <SmallChart
+                prices={[...coin.prices]}
+                className={cn(
+                  'w-32 h-12',
+                  coin.usd_price_change_24h > 0
+                    ? 'stroke-green-600'
+                    : 'stroke-red-600'
+                )}
+              />
+            </TableCell>
             <TableCell className="pr-5 text-right">
               <Button className="bg-blue-600 text-white" variant={'outline'}>
                 Trade
