@@ -12,8 +12,19 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/shared/ui/table'
-
+} from '@/shared/ui'
+import {
+  ColumnDef,
+  ColumnFiltersState,
+  SortingState,
+  VisibilityState,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from '@tanstack/react-table'
 import {
   CaretSortIcon,
   ChevronDownIcon,
@@ -25,7 +36,9 @@ const rowStyle = ''
 
 export const CoinTableUI: FC = () => {
   // const isDesktop = useMediaQuery({ query: '(min-width: 768px)' })
-  const { coinList } = useCoinList()
+  const {
+    coinList: { data, total },
+  } = useCoinList()
   const stylePercent = (percent: number) =>
     percent > 0
       ? 'text-green-500 dark:text-green-600'
@@ -45,7 +58,7 @@ export const CoinTableUI: FC = () => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {coinList.map((coin, idx) => (
+        {data.map((coin, idx) => (
           <TableRow
             key={coin.id}
             className="border-b-2 border-muted dark:border-background hover:bg-muted/50 dark:hover:bg-background/20"

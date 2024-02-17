@@ -5,12 +5,11 @@
 class PriceApiCrypto {
   private _baseUrl = 'https://price-api.crypto.com'
   private _fetch = async (url: string) => {
-    const response = await fetch(`${this._baseUrl}/${url}`)
-    const { data } = await response.json()
-    return data
+    const response = (await fetch(`${this._baseUrl}/${url}`)).json()
+    return response
   }
-  getCoinList = async (page?: string, limit?: string) =>
-    await this._fetch(`price/v1/tokens?page=${page ?? 1}&limit=${limit ?? 30}`)
+  getCoinList = async (page: number, limit: number) =>
+    await this._fetch(`price/v1/tokens?page=${page}&limit=${limit}`)
   getAllToken = async () => await this._fetch('meta/v1/all-tokens')
   getFiatToDollar = async () => await this._fetch('price/v1/currency/all')
   getNews = async () => await this._fetch('market/v2/token/2/news')

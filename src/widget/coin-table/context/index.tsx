@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { getCoinList } from '../lib'
+import { cryptoServices } from '@/shared/api'
 
 export interface ICoinList {
   icon?: string
@@ -21,14 +21,22 @@ export interface ICoinList {
   usd_price_change_24h: number
   usd_volume_24h: number
 }
-interface ICoinContext {
-  coinList: ICoinList[]
-  setCoinLIst: React.Dispatch<React.SetStateAction<ICoinList[]>>
+
+export interface ICoinListResponse {
+  data: ICoinList[]
+  total: number
 }
-const startValue = [] as ICoinList[]
+interface ICoinContext {
+  coinList: ICoinListResponse
+  getTableItems: (page?: number, limit?: number) => void
+}
+const startValue: ICoinListResponse = {
+  data: [] as ICoinList[],
+  total: 0,
+}
 const defaultContext = {
   coinList: startValue,
-  setCoinLIst: () => {},
+  getTableItems: () => {},
 }
 export const CoinListContext = React.createContext<ICoinContext>(defaultContext)
 
@@ -39,20 +47,17 @@ export const useCoinList = () => {
 export const CoinListProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
-  const [coinList, setCoinLIst] = React.useState<ICoinList[]>(startValue)
-  const getList = async () => {
-    const response = await getCoinList()
+  const [coinList, setCoinLIst] = React.useState<ICoinListResponse>(startValue)
+  const getTableItems = async (page?: number, limit?: number) => {
+    const response = await cryptoServices.getCoinList(page ?? 1, limit ?? 50)
     if (response) setCoinLIst(response)
   }
-  React.useEffect(() => {
-    getList()
-  }, [])
 
   return (
     <CoinListContext.Provider
       value={{
         coinList,
-        setCoinLIst,
+        getTableItems,
       }}
     >
       {children}
