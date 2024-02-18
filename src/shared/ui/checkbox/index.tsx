@@ -14,7 +14,7 @@ const checkboxVariants = cva(
         default:
           'border shadow border-primary bg-transparent data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground',
         blue: 'border shadows border-primary bg-transparent data-[state=checked]:bg-blue-600  data-[state=checked]:text-white',
-        star: 'data-[state=checked]:fill-yellow-500  data-[state=checked]:text-yellow-300',
+        star: 'data-[state=checked]:fill-yellow-500 dark:text-white text-zinc-400 fill-transparent data-[state=checked]:text-yellow-300 data-[state=checked]:dark:text-yellow-300',
       },
       size: {
         default: 'h-4 w-4',
@@ -47,7 +47,7 @@ const Checkbox = React.forwardRef<
     {/* [&>th]:text-center */}
 
     {variant === 'star' ? (
-      <StarIcon className="transition-color fill-inherit w-full h-full" />
+      <StarIcon className="transition-color text- fill-inherit w-full h-full" />
     ) : (
       <CheckboxPrimitive.Indicator
         className={cn('flex items-center justify-center text-current')}

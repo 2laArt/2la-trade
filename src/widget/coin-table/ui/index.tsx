@@ -1,11 +1,6 @@
 'use client'
-import { type FC } from 'react'
-import { useMediaQuery } from 'react-responsive'
-import { CoinListProvider, useCoinList } from '../context'
-import { percentageChange, presentationPrice } from '../lib'
-import { cn, formatToCurrency } from '@/shared/lib'
-import { Button } from '@/shared/ui'
 import {
+  Button,
   Table,
   TableBody,
   TableCell,
@@ -14,93 +9,148 @@ import {
   TableRow,
 } from '@/shared/ui'
 import {
-  ColumnDef,
   ColumnFiltersState,
   SortingState,
   VisibilityState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
-  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import {
-  CaretSortIcon,
-  ChevronDownIcon,
-  DotsHorizontalIcon,
-} from '@radix-ui/react-icons'
-import { SmallChart } from './small-chart'
+import React from 'react'
+import { coinColumns } from './colums'
+import { CoinListProvider, useCoinList } from '../context'
+import { SelectDisplayColumn } from './select-display-column'
+import { cn } from '@/shared/lib'
 
-const rowStyle = ''
-
-export const CoinTableUI: FC = () => {
-  // const isDesktop = useMediaQuery({ query: '(min-width: 768px)' })
+const CoinTableUI = () => {
   const {
     coinList: { data, total },
+    getTableItems,
   } = useCoinList()
-  const stylePercent = (percent: number) =>
-    percent > 0
-      ? 'text-green-500 dark:text-green-600'
-      : 'text-red-600 dark:text-red-700'
+  const [page, setPage] = React.useState<number>(1)
+  const [limit, setLimit] = React.useState<number>(50)
+  const [sorting, setSorting] = React.useState<SortingState>([])
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  )
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({})
+  const [rowSelection, setRowSelection] = React.useState({})
+  const table = useReactTable({
+    data,
+    columns: coinColumns,
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
+    state: {
+      sorting,
+      columnFilters,
+      columnVisibility,
+      rowSelection,
+    },
+  })
+  const totalPages = total / limit
+  const getPrevPage = () => {
+    if (page < 1) return
+    setPage((prev) => --prev)
+    getTableItems(page - 1, limit)
+  }
+  const getNextPage = () => {
+    if (totalPages < page) return
+    setPage((prev) => ++prev)
+    getTableItems(page + 1, limit)
+  }
+  React.useEffect(() => {
+    getTableItems()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   return (
-    <Table className="dark:bg-slate-900 bg-white font-medium">
-      <TableHeader className="border-b-2 border-muted dark:border-background pointer-events-none">
-        <TableRow>
-          <TableHead className="pl-5 py-3">#</TableHead>
-          <TableHead>Name</TableHead>
-          <TableHead>Price</TableHead>
-          <TableHead>24H Change</TableHead>
-          <TableHead>24H Volume</TableHead>
-          <TableHead>Market Cap</TableHead>
-          <TableHead>7D Chart</TableHead>
-          <TableHead className="pr-5" />
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {data.map((coin, idx) => (
-          <TableRow
-            key={coin.id}
-            className="border-b-2 border-muted dark:border-background hover:bg-muted/50 dark:hover:bg-background/20"
+    <div className="w-full">
+      <SelectDisplayColumn table={table} />
+      <div>
+        <Table className="dark:bg-slate-900 max-sm:text-xs bg-white font-medium">
+          <TableHeader className="border-b-2 border-muted dark:border-background uppercase">
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead className="max-sm:px-1" key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  )
+                })}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && 'selected'}
+                  className="border-b-2 border-muted  dark:border-background hover:bg-muted/50 dark:hover:bg-background/20  dark:data-[state=selected]:bg-background/40"
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell className="max-sm:px-1" key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={coinColumns.length}
+                  className="h-24 text-center"
+                >
+                  No results.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
+      <div className="flex items-center justify-end space-x-2 py-4">
+        <div className="flex-1 text-sm text-muted-foreground">
+          {table.getFilteredSelectedRowModel().rows.length} of{' '}
+          {table.getFilteredRowModel().rows.length} row(s) selected.
+        </div>
+        <div className="space-x-2 [&>button]:dark:bg-slate-900  [&>button]:bg-white">
+          <Button
+            variant="outline"
+            className="dark:hover:bg-slate-900/20"
+            size="sm"
+            onClick={getPrevPage}
+            disabled={page <= 1}
           >
-            <TableCell className="font-medium pl-5">{++idx}</TableCell>
-            <TableCell className=" flex items-center py-4">
-              <span className="inline-block w-10 h-10 rounded-full bg-slate-300 leading-10 text-center dark:bg-slate-700 mr-1">
-                {coin.symbol.slice(0, 3)}
-              </span>
-              <span className="inline-block">
-                {coin.name} <br />
-                <span className="font-normal">{coin.symbol}</span>
-              </span>
-            </TableCell>
-            <TableCell>
-              $ {formatToCurrency(coin.usd_price, { maximumFractionDigits: 2 })}
-            </TableCell>
-            <TableCell className={stylePercent(coin.usd_price_change_24h)}>
-              {percentageChange(coin.usd_price_change_24h)}
-            </TableCell>
-            <TableCell>{presentationPrice(coin.usd_volume_24h, '$')}</TableCell>
-            <TableCell>{presentationPrice(coin.usd_marketcap, '$')}</TableCell>
-            <TableCell>
-              <SmallChart
-                prices={[...coin.prices]}
-                className={cn(
-                  'w-32 h-12',
-                  coin.usd_price_change_24h > 0
-                    ? 'stroke-green-600'
-                    : 'stroke-red-600'
-                )}
-              />
-            </TableCell>
-            <TableCell className="pr-5 text-right">
-              <Button className="bg-blue-600 text-white" variant={'outline'}>
-                Trade
-              </Button>
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+            Previous
+          </Button>
+          <Button
+            variant="outline"
+            className="dark:hover:bg-slate-900/20"
+            size="sm"
+            onClick={getNextPage}
+            disabled={totalPages < page}
+          >
+            Next
+          </Button>
+        </div>
+      </div>
+    </div>
   )
 }
 export const CoinTable = () => (
