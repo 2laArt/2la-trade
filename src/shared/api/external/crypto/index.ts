@@ -16,7 +16,7 @@ class PriceApiCrypto {
   getIcons = async () => await this._fetch('meta/v1/all-coin-launches')
   getPeriods = async (slug: string, fiat: string) =>
     await this._fetch(`price/v1/statistics/${slug}?convert=${fiat}`)
-  getTopMovers = async (count: string) =>
+  getTopMovers = async (count: number) =>
     await this._fetch(
       `price/v1/top-movers?depth=${count}&tradable_on=EXCHANGE-OR-APP`
     )

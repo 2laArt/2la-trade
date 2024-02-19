@@ -20,8 +20,15 @@ const config: Config = {
   theme: {
     container: {
       center: true,
-      padding: '2rem',
+      padding: {
+        DEFAULT: '0.5rem',
+        md: '1rem',
+        lg: '2rem',
+        '2xl': '3rem',
+      },
       screens: {
+        md: '900px',
+        lg: '1024px',
         '2xl': '1400px',
       },
     },
@@ -91,6 +98,9 @@ const config: Config = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [
+    require('tailwindcss-animate'),
+    require('@tailwindcss/container-queries'),
+  ],
 }
 export default config

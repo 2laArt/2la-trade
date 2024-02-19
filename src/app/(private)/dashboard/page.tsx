@@ -1,5 +1,6 @@
 import { type NextPage } from 'next'
-const Dashboard: NextPage = () => {
+import React from 'react'
+const Dashboard: NextPage = async () => {
   return <div>dashboard</div>
 }
 export default Dashboard
