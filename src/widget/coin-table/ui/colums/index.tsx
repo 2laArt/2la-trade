@@ -2,8 +2,12 @@ import { Column, ColumnDef } from '@tanstack/react-table'
 import { Button, Checkbox } from '@/shared/ui'
 import { CaretSortIcon } from '@radix-ui/react-icons'
 import { type ICoinList } from '../../context'
-import { cn, formatToCurrency } from '@/shared/lib'
-import { percentageChange, presentationPrice } from '../../lib'
+import {
+  cn,
+  formatPercentage,
+  formatToCurrency,
+  priceWithSuffix,
+} from '@/shared/lib'
 import React from 'react'
 import { SmallChart } from '@/features/small-chart'
 
@@ -90,7 +94,7 @@ export const coinColumns: ColumnDef<ICoinList>[] = [
           : 'text-red-600 dark:text-red-700'
       return (
         <div className={cn(styles(value), 'pl-7')}>
-          {percentageChange(value)}
+          {formatPercentage(value)}
         </div>
       )
     },
@@ -101,7 +105,7 @@ export const coinColumns: ColumnDef<ICoinList>[] = [
     header: () => <div>24H Volume</div>,
     cell: ({ row }) => {
       const value = row.getValue('24H Volume') as number
-      return <span>{presentationPrice(value, '$')}</span>
+      return <span>{priceWithSuffix(value, '$')}</span>
     },
   },
   {
@@ -110,7 +114,7 @@ export const coinColumns: ColumnDef<ICoinList>[] = [
     header: () => <div>market cap</div>,
     cell: ({ row }) => {
       const value = row.getValue('market cap') as number
-      return <span>{presentationPrice(value, '$')}</span>
+      return <span>{priceWithSuffix(value, '$')}</span>
     },
   },
   {
