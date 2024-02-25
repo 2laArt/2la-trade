@@ -1,4 +1,0 @@
-const allCurrency =
-  'https://www.binance.com/bapi/asset/v1/public/asset-service/product/currency'
-
-const s = 'https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1h'

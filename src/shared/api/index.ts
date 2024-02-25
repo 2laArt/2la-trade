@@ -1,2 +1,3 @@
 export { queryClient } from './query-client'
-export { cryptoServices } from './external'
+export * from './key-factory'
+export { ApiInstance } from './instance'
