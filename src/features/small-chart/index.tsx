@@ -1,7 +1,8 @@
 'use client'
-import { useRef, type FC, useEffect, useState } from 'react'
+import React from 'react'
 import { cn } from '@/shared/lib'
 import { getPoints } from './lib'
+import { percentColor } from '@/shared/ui'
 
 interface IChartProps {
   prices: number[]
@@ -9,11 +10,19 @@ interface IChartProps {
   className?: string
 }
 
-export const SmallChart: FC<IChartProps> = ({ prices, className, percent }) => {
-  const ref = useRef<SVGSVGElement>(null)
-  const [points, setPoints] = useState<string>('')
-  const chartColor = percent > 0 ? 'stroke-green-600' : 'stroke-red-600'
-  useEffect(() => {
+export const SmallChart: React.FC<IChartProps> = ({
+  prices,
+  className,
+  percent,
+}) => {
+  const ref = React.useRef<SVGSVGElement>(null)
+  const [points, setPoints] = React.useState<string>('')
+  const strokeColor =
+    percent > 0
+      ? 'stroke-green-500 dark:stroke-green-600'
+      : 'stroke-red-600 dark:stroke-red-700'
+
+  React.useEffect(() => {
     if (!ref.current) return
     const pointsSrt = getPoints(prices, ref.current as any)
     setPoints(pointsSrt)
@@ -23,9 +32,9 @@ export const SmallChart: FC<IChartProps> = ({ prices, className, percent }) => {
       ref={ref}
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
-      className={cn('inline-block w-full h-full', chartColor, className)}
+      className={cn('inline-block w-full h-full', strokeColor, className)}
       preserveAspectRatio="none"
-      stroke="green"
+      // stroke="green"
     >
       <polyline
         points={points}
