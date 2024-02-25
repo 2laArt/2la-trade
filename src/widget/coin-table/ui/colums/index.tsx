@@ -1,18 +1,13 @@
 import { Column, ColumnDef } from '@tanstack/react-table'
-import { Button, Checkbox } from '@/shared/ui'
+import { Button, Checkbox, Percentage, TokenIcon } from '@/shared/ui'
 import { CaretSortIcon } from '@radix-ui/react-icons'
-import { type ICoinList } from '../../context'
-import {
-  cn,
-  formatPercentage,
-  formatToCurrency,
-  priceWithSuffix,
-} from '@/shared/lib'
+import { formatToCurrency, priceWithSuffix } from '@/shared/lib'
 import React from 'react'
 import { SmallChart } from '@/features/small-chart'
+import { type ICoin } from '@/entities/coin'
 
 const HeaderButton: React.FC<{
-  column: Column<ICoinList, unknown>
+  column: Column<ICoin, unknown>
   text: string
 }> = ({ column, text }) => (
   <Button
@@ -25,7 +20,7 @@ const HeaderButton: React.FC<{
   </Button>
 )
 
-export const coinColumns: ColumnDef<ICoinList>[] = [
+export const coinColumns: ColumnDef<ICoin>[] = [
   {
     accessorKey: 'rank',
     enableHiding: false,
@@ -48,17 +43,24 @@ export const coinColumns: ColumnDef<ICoinList>[] = [
   {
     id: 'naming',
     enableHiding: false,
-    accessorFn: ({ name, symbol, icon }) => `${name}!${symbol}!${icon}`,
+    accessorFn: ({ name, symbol, icon, slug, token_id }) =>
+      `${name}!${symbol}!${icon || ''}!${slug}!${token_id}`,
     header: ({ column }) => {
       return <HeaderButton column={column} text="Name" />
     },
     cell: ({ row }) => {
-      const [name, symbol, icon] = (row.getValue('naming') as string).split('!')
+      const [name, symbol, icon, slug, token_id] = (
+        row.getValue('naming') as string
+      ).split('!')
+
       return (
         <div className="flex items-center py-2">
-          <span className=" w-10 h-10 max-sm:w-8 max-sm:h-8 rounded-full inline-block bg-slate-300 text-center leading-10 max-sm:leading-8 dark:bg-slate-700 mr-1">
-            {symbol.slice(0, 3)}
-          </span>
+          <TokenIcon
+            icon={icon}
+            slug={slug}
+            symbol={symbol}
+            token_id={+token_id}
+          />
           <span className="inline-block">
             {name} <br />
             <span className="font-normal">{symbol}</span>
@@ -88,15 +90,7 @@ export const coinColumns: ColumnDef<ICoinList>[] = [
     header: ({ column }) => <HeaderButton column={column} text="24H Change" />,
     cell: ({ row }) => {
       const value = row.getValue('24H Change') as number
-      const styles = (percent: number) =>
-        percent > 0
-          ? 'text-green-500 dark:text-green-600'
-          : 'text-red-600 dark:text-red-700'
-      return (
-        <div className={cn(styles(value), 'pl-7')}>
-          {formatPercentage(value)}
-        </div>
-      )
+      return <Percentage percent={value} className="pl-7" />
     },
   },
   {
@@ -126,7 +120,13 @@ export const coinColumns: ColumnDef<ICoinList>[] = [
       const percent = row.getValue('24H Change') as number
 
       return (
-        <SmallChart prices={value} className={'w-28 h-10'} percent={percent} />
+        <div>
+          <SmallChart
+            prices={value}
+            className={'w-28 h-10'}
+            percent={percent}
+          />
+        </div>
       )
     },
   },

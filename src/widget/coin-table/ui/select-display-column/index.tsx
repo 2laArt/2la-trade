@@ -7,10 +7,10 @@ import {
 } from '@/shared/ui'
 import { ChevronDownIcon } from 'lucide-react'
 import React from 'react'
-import { type ICoinList } from '../../context'
 import { Table } from '@tanstack/react-table'
 import { useMediaQuery } from 'react-responsive'
-export const SelectDisplayColumn: React.FC<{ table: Table<ICoinList> }> = ({
+import { type ICoin } from '@/entities/coin'
+export const SelectDisplayColumn: React.FC<{ table: Table<ICoin> }> = ({
   table,
 }) => {
   const is1110 = useMediaQuery({
@@ -42,7 +42,6 @@ export const SelectDisplayColumn: React.FC<{ table: Table<ICoinList> }> = ({
       return
     }
     columnsList.map((column) => column.toggleVisibility(true))
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile, is1110])
   return (

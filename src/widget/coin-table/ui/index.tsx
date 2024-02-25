@@ -1,6 +1,7 @@
 'use client'
 import {
   Button,
+  Each,
   Table,
   TableBody,
   TableCell,
@@ -20,17 +21,23 @@ import {
 } from '@tanstack/react-table'
 import React from 'react'
 import { coinColumns } from './colums'
-import { CoinListProvider, useCoinList } from '../context'
 import { SelectDisplayColumn } from './select-display-column'
-import { cn } from '@/shared/lib'
+import { CoinsTableFooter } from './footer'
+import { ICoinList, useQueryCoinsPage } from '@/entities/coin'
+import { CoinTableBody } from './body-rows'
 
-const CoinTableUI = () => {
-  const {
-    coinList: { data, total },
-    getTableItems,
-  } = useCoinList()
-  const [page, setPage] = React.useState<number>(1)
-  const [limit, setLimit] = React.useState<number>(50)
+interface ICoinTable {
+  coinsPage: ICoinList
+  limit: number
+  page: number
+  setPage: React.Dispatch<React.SetStateAction<number>>
+}
+export const CoinTableUI: React.FC<ICoinTable> = ({
+  coinsPage,
+  limit,
+  page,
+  setPage,
+}) => {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -39,7 +46,7 @@ const CoinTableUI = () => {
     React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
   const table = useReactTable({
-    data,
+    data: coinsPage.data,
     columns: coinColumns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -55,106 +62,62 @@ const CoinTableUI = () => {
       rowSelection,
     },
   })
-  const totalPages = total / limit
-  const getPrevPage = () => {
-    if (page < 1) return
-    setPage((prev) => --prev)
-    getTableItems(page - 1, limit)
-  }
-  const getNextPage = () => {
-    if (totalPages < page) return
-    setPage((prev) => ++prev)
-    getTableItems(page + 1, limit)
-  }
+  const totalPages = coinsPage?.total ?? 1 / limit
+  const selectedRow = table.getFilteredSelectedRowModel().rows.length
+  const allRows = table.getFilteredRowModel().rows.length
+  const headerRows = table.getHeaderGroups()
+  const bodyRows = table.getRowModel().rows
+
   React.useEffect(() => {
-    getTableItems()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    console.log('table render')
+  })
   return (
     <div className="w-full">
       <SelectDisplayColumn table={table} />
       <div>
         <Table className="dark:bg-slate-900 max-sm:text-xs bg-white font-medium">
           <TableHeader className="border-b-2 border-muted dark:border-background uppercase">
-            {table.getHeaderGroups().map((headerGroup) => (
+            {headerRows.map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead className="max-sm:px-1" key={header.id}>
-                      {header.isPlaceholder
+                <Each
+                  arr={headerGroup.headers}
+                  render={(item) => (
+                    <TableHead className="max-sm:px-1" key={item.id}>
+                      {item.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
+                            item.column.columnDef.header,
+                            item.getContext()
                           )}
                     </TableHead>
-                  )
-                })}
+                  )}
+                />
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}
-                  className="border-b-2 border-muted  dark:border-background hover:bg-muted/50 dark:hover:bg-background/20  dark:data-[state=selected]:bg-background/40"
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell className="max-sm:px-1" key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={coinColumns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
+          <CoinTableBody rows={bodyRows} />
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{' '}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
-        <div className="space-x-2 [&>button]:dark:bg-slate-900  [&>button]:bg-white">
-          <Button
-            variant="outline"
-            className="dark:hover:bg-slate-900/20"
-            size="sm"
-            onClick={getPrevPage}
-            disabled={page <= 1}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            className="dark:hover:bg-slate-900/20"
-            size="sm"
-            onClick={getNextPage}
-            disabled={totalPages < page}
-          >
-            Next
-          </Button>
-        </div>
-      </div>
+      <CoinsTableFooter
+        allRows={allRows}
+        page={page}
+        setPage={setPage}
+        selectedRows={selectedRow}
+        totalPages={totalPages}
+      />
     </div>
   )
 }
-export const CoinTable = () => (
-  <CoinListProvider>
-    <CoinTableUI />
-  </CoinListProvider>
-)
+export const CoinTable = () => {
+  const [page, setPage] = React.useState<number>(1)
+  const { data: coinsPage } = useQueryCoinsPage({ page, limit: 50 })
+  const initial = { data: [], total: 0 }
+  return (
+    <CoinTableUI
+      coinsPage={coinsPage ?? initial}
+      limit={50}
+      page={page}
+      setPage={setPage}
+    />
+  )
+}
