@@ -1,24 +1,42 @@
-import { type FC } from 'react'
+import { cn } from '@/shared/lib'
+import NextImage from 'next/image'
+import { useState, type FC, useEffect, useCallback } from 'react'
 
 export const TokenIcon: FC<{
-  icon?: string
   symbol: string
   slug: string
   token_id: number
-}> = ({ icon, symbol, slug, token_id }) => {
+  className?: string
+}> = ({ symbol, slug, token_id, className }) => {
+  const [iconSrc, setIconSrc] = useState<string>()
   const hue = 360
   const tokenColor = `hsl(${token_id > hue ? token_id % hue : token_id}, 100%, 50%)`
-  return icon ? (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img src={icon} alt={`${slug} icon`} className="w-10 h-10" />
-  ) : (
-    <div
-      style={{
-        backgroundColor: tokenColor,
-      }}
-      className="w-10 rounded-full h-10 leading-10 text-sm text-black font-medium text-center mr-2"
-    >
-      {symbol.slice(0, 2)}
-    </div>
+  const getImage = useCallback((slug: string) => {
+    const img = new Image()
+    const url = `${process.env.NEXT_PUBLIC_CRYPTO_STATIC}/token/icons/${slug}/color_icon.png`
+    img.src = url
+    img.addEventListener('load', () => setIconSrc(url))
+    img.addEventListener('error', () =>
+      console.error(`${slug} image is not exist`)
+    )
+  }, [])
+  useEffect(() => {
+    getImage(slug)
+  }, [getImage, slug])
+  return (
+    <span className={cn('inline-block', className)}>
+      {iconSrc ? (
+        <NextImage alt={`${slug} icon`} src={iconSrc} width={40} height={40} />
+      ) : (
+        <div
+          style={{
+            backgroundColor: tokenColor,
+          }}
+          className="w-10 rounded-full h-10 leading-10 text-sm text-black font-medium text-center"
+        >
+          {symbol.slice(0, 2)}
+        </div>
+      )}
+    </span>
   )
 }
