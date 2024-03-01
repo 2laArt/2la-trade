@@ -4,10 +4,10 @@ import React from 'react'
 import Autoplay from 'embla-carousel-autoplay'
 import { Carousel, CarouselContent, CarouselItem } from '@/shared/ui'
 import { cn } from '@/shared/lib'
-import { CoinCard, type ICoinShort } from '@/entities/coin'
+import { CoinCard, type ITopMovers } from '@/entities/coin'
 
 interface ITopMoversSlider {
-  coinList?: ICoinShort[]
+  coinList?: ITopMovers[]
   currency: string
   itemClass?: string
   className?: string

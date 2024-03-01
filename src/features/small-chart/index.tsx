@@ -2,7 +2,6 @@
 import React from 'react'
 import { cn } from '@/shared/lib'
 import { getPoints } from './lib'
-import { percentColor } from '@/shared/ui'
 
 interface IChartProps {
   prices: number[]
