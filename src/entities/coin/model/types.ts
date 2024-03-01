@@ -16,7 +16,7 @@ export interface ICoin {
   usd_price_change_24h: number
   usd_volume_24h: number
 }
-export interface ICoinShort {
+export interface ITopMovers {
   icon?: string
   name: string
   symbol: string
@@ -26,13 +26,39 @@ export interface ICoinShort {
   prices: number[]
   usd_price_change_24h: number
 }
-export interface ICoinIcon {
-  icon_light: string
-  id: number
-  name: string
-  symbol: string
-}
-export interface ICoinList {
+export interface IFiltersCoins {
   data: ICoin[]
   total: number
+}
+export interface IFiltersCoinsParams {
+  page: number
+  limit: number
+  sort?:
+    | 'type'
+    | 'createdTime'
+    | 'tokenId'
+    | 'name'
+    | 'slug'
+    | 'symbol'
+    | 'rank'
+  direction?: 'DESC' | 'ASC'
+}
+export interface ITopMoversParams {
+  direction?: 1 | -1
+  depth: number
+}
+export interface ITrendingCoinsParams {
+  limit: number
+}
+export interface ITrendingCoins {
+  slug: string
+  symbol: string
+  name: string
+  token_id: number
+  usd_price_change_24h: number
+}
+export interface IShowroom {
+  market_cap: number
+  market_cap_change_rate: number
+  samples: { time: number; market_cap: number }[]
 }

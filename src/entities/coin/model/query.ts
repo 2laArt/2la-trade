@@ -1,21 +1,27 @@
-import { type ICoinsPageParams, keyFactory } from '@/shared/api'
 import { useQuery } from '@tanstack/react-query'
-import { getCoinsPage, getTopMovers } from './api'
+import { coinServices } from './api'
+import { keyFactory } from '@/entities/key-factory'
+import type { IFiltersCoinsParams, ITopMoversParams } from './types'
 
-export const useQueryCoinsPage = (params: ICoinsPageParams) => {
+export const useQueryCoinsPage = (params: IFiltersCoinsParams) => {
   const coinsPage = useQuery({
-    queryKey: keyFactory.coinsPage(params),
-    queryFn: () => getCoinsPage(params),
+    queryKey: keyFactory.filters(params),
+    queryFn: () => coinServices.filters(params),
   })
 
   return coinsPage
 }
 
-export const useQueryTopMovers = (count: number) => {
+export const useQueryTopMovers = ({
+  depth,
+}: Omit<ITopMoversParams, 'direction'>) => {
   const topMovers = useQuery({
-    queryKey: keyFactory.topMovers(count),
-    queryFn: () => getTopMovers(count),
+    queryKey: keyFactory.topMovers({ depth }),
+    queryFn: () => coinServices.topMovers({ depth }),
+    staleTime: 1000,
   })
 
   return topMovers
 }
+
+// const icons = queryClient.getQueryData(['icons'])
