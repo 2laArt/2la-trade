@@ -4,10 +4,10 @@ import { CaretSortIcon } from '@radix-ui/react-icons'
 import { formatToCurrency, priceWithSuffix } from '@/shared/lib'
 import React from 'react'
 import { SmallChart } from '@/features/small-chart'
-import { type ICoin } from '@/entities/coin'
+import { type ITopMovers } from '@/entities/coin'
 
 const HeaderButton: React.FC<{
-  column: Column<ICoin, unknown>
+  column: Column<ITopMovers, unknown>
   text: string
 }> = ({ column, text }) => (
   <Button
@@ -19,8 +19,7 @@ const HeaderButton: React.FC<{
     <CaretSortIcon className="ml-2 h-4 w-4" />
   </Button>
 )
-
-export const coinColumns: ColumnDef<ICoin>[] = [
+export const coinColumns: ColumnDef<ITopMovers>[] = [
   {
     accessorKey: 'rank',
     enableHiding: false,
@@ -56,10 +55,10 @@ export const coinColumns: ColumnDef<ICoin>[] = [
       return (
         <div className="flex items-center py-2">
           <TokenIcon
-            icon={icon}
             slug={slug}
             symbol={symbol}
             token_id={+token_id}
+            className="mr-2"
           />
           <span className="inline-block">
             {name} <br />
