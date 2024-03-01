@@ -14,7 +14,7 @@ const coinLinks: INavLink[] = [
   },
   {
     title: 'Top Losers',
-    href: paths.coinShowroom('top losers'),
+    href: paths.coinShowroom('top-losers'),
     description: '',
   },
   {
