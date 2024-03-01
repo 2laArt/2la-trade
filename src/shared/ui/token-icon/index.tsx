@@ -1,3 +1,4 @@
+'use client'
 import { cn } from '@/shared/lib'
 import NextImage from 'next/image'
 import { useState, type FC, useEffect, useCallback } from 'react'

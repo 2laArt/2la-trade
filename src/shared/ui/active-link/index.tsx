@@ -1,22 +1,18 @@
 import { cn } from '@/shared/lib'
 import Link from 'next/link'
-import { type FC } from 'react'
+import { ReactNode, type FC } from 'react'
 
 export const ActiveLink: FC<{
   pathname: string
   href: string
-  name: string
-}> = ({ href, name, pathname }) => {
+  children: ReactNode
+  className?: string
+  activeClass?: string
+}> = ({ href, children, pathname, activeClass, className }) => {
   const isActive = pathname === href.split('?')[0]
   return (
-    <Link
-      className={cn(
-        'px-3 py-1 cursor-pointer transition-[color] hover:text-orange-300 bg-background',
-        isActive && 'text-orange-300'
-      )}
-      href={href}
-    >
-      {name}
+    <Link className={cn(className, isActive && activeClass)} href={href}>
+      {children}
     </Link>
   )
 }
