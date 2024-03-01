@@ -3,16 +3,16 @@ export const paths = {
   auth: '/auth',
   dashboard: '/dashboard',
   trade: '/trade',
-  coinCategories: 'coins/categories',
+  coinCategories: '/coins/categories',
   coinShowroom: (
     filter:
       | 'top-gainers'
-      | 'top losers'
+      | 'top-losers'
       | 'recently-added'
       | 'trending'
       | 'most-popular'
-  ) => `coins/showroom/${filter}`,
-  nftGuide: 'nft/guide',
-  nftCollections: 'nft/collections',
-  nftWatch: 'nft/whale-watch',
+  ) => `/coins/showroom/${filter}`,
+  nftGuide: '/nft/guide',
+  nftCollections: '/nft/collections',
+  nftWatch: '/nft/whale-watch',
 }
