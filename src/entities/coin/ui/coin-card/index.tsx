@@ -4,10 +4,10 @@ import { cn, formatToCurrency } from '@/shared/lib'
 import { Percentage, TokenIcon } from '@/shared/ui'
 import React from 'react'
 import { useMediaQuery } from 'react-responsive'
-import { ICoinShort } from '../../model'
+import { ITopMovers } from '../../model'
 
 interface ICoinCartProps {
-  coin: ICoinShort
+  coin: ITopMovers
   className?: string
   currency: string
 }
@@ -24,7 +24,6 @@ export const CoinCard: React.FC<ICoinCartProps> = ({
     symbol,
     usd_price,
     usd_price_change_24h,
-    icon,
   } = coin
   const is640 = useMediaQuery({ query: '(min-width: 640px)' })
   return (
@@ -35,12 +34,7 @@ export const CoinCard: React.FC<ICoinCartProps> = ({
       )}
     >
       <div className="flex justify-between items-center">
-        <TokenIcon
-          icon={icon}
-          slug={slug}
-          symbol={symbol}
-          token_id={token_id}
-        />
+        <TokenIcon slug={slug} symbol={symbol} token_id={token_id} />
         {is640 ? (
           <SmallChart
             percent={usd_price_change_24h}
