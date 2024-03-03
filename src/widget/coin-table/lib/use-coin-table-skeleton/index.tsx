@@ -15,7 +15,7 @@ const data: ITopMovers[] = Array.from({ length: 10 })
 export const useCoinTableSkeleton = ({
   columns,
 }: {
-  columns: ColumnDef<ITopMovers>[]
+  columns: ColumnDef<Partial<ITopMovers>>[]
 }) => {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(

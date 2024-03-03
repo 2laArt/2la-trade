@@ -15,8 +15,8 @@ export const useCoinTable = ({
   data,
   columns,
 }: {
-  data: ITopMovers[]
-  columns: ColumnDef<ITopMovers>[]
+  data: Partial<ITopMovers>[]
+  columns: ColumnDef<Partial<ITopMovers>>[]
 }) => {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(

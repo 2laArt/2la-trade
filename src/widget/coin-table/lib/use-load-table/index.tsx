@@ -3,7 +3,9 @@ import { Column } from '@tanstack/react-table'
 import React from 'react'
 import { useMediaQuery } from 'react-responsive'
 
-export const useLoadTable = (columns: Column<ITopMovers, unknown>[]) => {
+export const useLoadTable = (
+  columns: Column<Partial<ITopMovers>, unknown>[]
+) => {
   const is1110 = useMediaQuery({
     query: '(max-width: 1110px)',
   })

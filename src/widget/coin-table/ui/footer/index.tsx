@@ -4,7 +4,8 @@ import React from 'react'
 interface ICoinsTableFooter {
   selectedRows: number
   allRows: number
-  setPage: React.Dispatch<React.SetStateAction<number>>
+  setNextPage: VoidFunction
+  setPrevPage: VoidFunction
   page: number
   totalPages: number
 }
@@ -12,13 +13,10 @@ export const CoinsTableFooter: React.FC<ICoinsTableFooter> = ({
   allRows,
   page,
   selectedRows,
-  setPage,
   totalPages,
+  setNextPage,
+  setPrevPage,
 }) => {
-  const setPrev = () => !!(page > 1) && setPage((prev) => --prev)
-
-  const setNext = () => !!(totalPages > page) && setPage((prev) => ++prev)
-
   return (
     <div className="flex items-center justify-end space-x-2 py-4">
       <div className="flex-1 text-sm text-muted-foreground">
@@ -29,7 +27,7 @@ export const CoinsTableFooter: React.FC<ICoinsTableFooter> = ({
           variant="outline"
           className="dark:hover:bg-slate-900/20"
           size="sm"
-          onClick={setPrev}
+          onClick={setPrevPage}
           disabled={page <= 1}
         >
           Previous
@@ -38,8 +36,8 @@ export const CoinsTableFooter: React.FC<ICoinsTableFooter> = ({
           variant="outline"
           className="dark:hover:bg-slate-900/20"
           size="sm"
-          onClick={setNext}
-          disabled={totalPages < page}
+          onClick={setNextPage}
+          disabled={totalPages <= page}
         >
           Next
         </Button>

@@ -10,8 +10,8 @@ export const useTableCondition = ({
   isLoading,
   data,
 }: {
-  columns: ColumnDef<ITopMovers>[]
-  data?: ITopMovers[]
+  columns: ColumnDef<Partial<ITopMovers>>[]
+  data?: Partial<ITopMovers>[]
   isLoading: boolean
 }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps

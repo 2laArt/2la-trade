@@ -5,31 +5,36 @@ import React from 'react'
 import { coinColumns } from './columns'
 import { SelectDisplayColumn } from './select-display-column'
 import { CoinsTableFooter } from './footer'
-import { IFiltersCoins } from '@/entities/coin'
+import { ITopMovers } from '@/entities/coin'
 import { CoinTableBody } from './body-rows'
-import { useMediaQuery } from 'react-responsive'
-import { useLoadTable, useTableCondition } from '../lib'
+import { useLoadTable, useTableCondition, useTablePagination } from '../lib'
 
 interface ICoinTable {
-  coinsPage?: IFiltersCoins
+  data?: Partial<ITopMovers>[]
+  total?: number
   limit: number
-  page: number
   isLoading: boolean
-  setPage: React.Dispatch<React.SetStateAction<number>>
+  title?: string
 }
 export const CoinTable: React.FC<ICoinTable> = ({
-  coinsPage,
+  data,
+  total,
   limit,
-  page,
   isLoading,
-  setPage,
+  title,
 }) => {
+  const { setNextPage, setPrevPage, coins, page, totalPages } =
+    useTablePagination({
+      limit,
+      total,
+      data,
+    })
+
   const table = useTableCondition({
     isLoading,
     columns: coinColumns,
-    data: coinsPage?.data,
+    data: coins,
   })
-  const totalPages = coinsPage?.total ?? 1 / limit
   const selectedRow = table.getFilteredSelectedRowModel().rows.length
   const allRows = table.getFilteredRowModel().rows.length
   const headerRows = table.getHeaderGroups()
@@ -47,7 +52,7 @@ export const CoinTable: React.FC<ICoinTable> = ({
     <div className="w-full">
       {isLoadTable && (
         <>
-          <SelectDisplayColumn columns={columnsList} />
+          <SelectDisplayColumn columns={columnsList} title={title} />
           <div>
             <Table className="dark:bg-slate-900 max-sm:text-xs bg-white font-medium">
               <TableHeader className="border-b-2 border-muted dark:border-background uppercase">
@@ -56,7 +61,10 @@ export const CoinTable: React.FC<ICoinTable> = ({
                     <Each
                       arr={headerGroup.headers}
                       render={(item) => (
-                        <TableHead className="max-sm:px-1" key={item.id}>
+                        <TableHead
+                          className="max-sm:px-1 text-center"
+                          key={item.id}
+                        >
                           {item.isPlaceholder
                             ? null
                             : flexRender(
@@ -77,8 +85,9 @@ export const CoinTable: React.FC<ICoinTable> = ({
           </div>
           <CoinsTableFooter
             allRows={allRows}
+            setNextPage={setNextPage}
+            setPrevPage={setPrevPage}
             page={page}
-            setPage={setPage}
             selectedRows={selectedRow}
             totalPages={totalPages}
           />

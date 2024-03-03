@@ -10,11 +10,14 @@ import React from 'react'
 import { Column } from '@tanstack/react-table'
 import { type ITopMovers } from '@/entities/coin'
 export const SelectDisplayColumn: React.FC<{
-  columns: Column<ITopMovers, unknown>[]
-}> = ({ columns }) => {
+  columns: Column<Partial<ITopMovers>, unknown>[]
+  title?: string
+}> = ({ columns, title }) => {
   return (
     <div className="flex items-center py-4">
-      <h3 className="text-lg font-semibold"> Today is Cryptocurrency Prices</h3>
+      <h3 className="text-lg font-semibold">
+        {title || 'Today is Cryptocurrency Prices'}
+      </h3>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button

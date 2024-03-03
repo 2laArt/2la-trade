@@ -4,7 +4,7 @@ import { Row, flexRender } from '@tanstack/react-table'
 import React from 'react'
 
 export const CoinTableBody: React.FC<{
-  rows: Row<ITopMovers>[]
+  rows: Row<Partial<ITopMovers>>[]
   columnsCount: number
 }> = ({ rows, columnsCount }) => {
   return (
@@ -21,7 +21,7 @@ export const CoinTableBody: React.FC<{
               <Each
                 arr={row.getVisibleCells()}
                 render={(cell) => (
-                  <TableCell className="max-sm:px-1" key={cell.id}>
+                  <TableCell className="max-sm:px-1 text-center" key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 )}
