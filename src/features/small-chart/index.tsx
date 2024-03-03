@@ -4,7 +4,7 @@ import { cn } from '@/shared/lib'
 import { getPoints } from './lib'
 
 interface IChartProps {
-  prices: number[]
+  prices?: number[]
   percent: number
   className?: string
 }
@@ -16,6 +16,7 @@ export const SmallChart: React.FC<IChartProps> = ({
 }) => {
   const ref = React.useRef<SVGSVGElement>(null)
   const [points, setPoints] = React.useState<string>('')
+
   const strokeColor =
     percent > 0
       ? 'stroke-green-500 dark:stroke-green-600'
@@ -23,9 +24,10 @@ export const SmallChart: React.FC<IChartProps> = ({
 
   React.useEffect(() => {
     if (!ref.current) return
-    const pointsSrt = getPoints(prices, ref.current as any)
+    const pointsSrt = getPoints({ arr: prices, current: ref.current as any })
     setPoints(pointsSrt)
   }, [ref, prices])
+
   return (
     <svg
       ref={ref}
@@ -33,7 +35,6 @@ export const SmallChart: React.FC<IChartProps> = ({
       version="1.1"
       className={cn('inline-block w-full h-full', strokeColor, className)}
       preserveAspectRatio="none"
-      // stroke="green"
     >
       <polyline
         points={points}

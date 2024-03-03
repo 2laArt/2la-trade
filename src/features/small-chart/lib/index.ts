@@ -1,6 +1,13 @@
-export const getPoints = (arr: number[], current: SVGSVGElement) => {
+export const getPoints = ({
+  arr,
+  current,
+}: {
+  arr?: number[]
+  current: SVGSVGElement
+}) => {
   const { height, width } = current.getBoundingClientRect()
-  if (!arr.length) {
+
+  if (!arr || !arr.length) {
     const half = height / 2
     return `0 ${half}, ${width} ${half}`
   }
