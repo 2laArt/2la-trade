@@ -11,7 +11,7 @@ import { chartOptions } from '../config'
 import { prepareToPlotted } from '../lib'
 
 const queryParams: IChartParams = { period: 'all', slug: 'bitcoin' }
-const CoinChart = ({
+export const CoinChart = ({
   data,
   isLoading,
 }: {
@@ -86,4 +86,3 @@ const CoinChart = ({
     </>
   )
 }
-export default CoinChart
