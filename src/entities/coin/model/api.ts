@@ -1,40 +1,39 @@
 import { ApiInstance } from '@/shared/api'
 import type {
-  IFiltersCoins,
-  IFiltersCoinsParams,
-  IShowroom,
-  ITopMovers,
-  ITopMoversParams,
-  ITrendingCoins,
-  ITrendingCoinsParams,
-} from './types'
+  IChartParams,
+  ICoin,
+  ICoinChartResponse,
+  ICoinMetaData,
+  ICoinPeriod,
+  ICoinStatisticsParams,
+} from './types.ts'
 
-const baseUrl = `${process.env.NEXT_PUBLIC_CRYPTO_COM_URL}/price`
+const baseUrl = `${process.env.NEXT_PUBLIC_CRYPTO_COM_URL}`
 
-export class CoinServices extends ApiInstance {
-  topMovers = async (params: ITopMoversParams): Promise<ITopMovers[]> => {
-    const searchParams = this.getSearchParams({
-      ...params,
-      tradable_on: 'EXCHANGE-OR-APP',
-    })
-    const url = `v1/top-movers?${searchParams}`
+class CoinServices extends ApiInstance {
+  chart = async ({
+    period,
+    slug,
+  }: IChartParams): Promise<ICoinChartResponse> => {
+    const url = `price/v2/${period}/${slug}`
     return await this.fetch(url)
   }
-  filters = async (params: IFiltersCoinsParams): Promise<IFiltersCoins> => {
-    const searchParams = this.getSearchParams(params)
-    const url = `v1/tokens?${searchParams}`
-    return await this.fetch<IFiltersCoins>(url)
+  statistics = async ({
+    currency = 'USD',
+    slug,
+  }: ICoinStatisticsParams): Promise<ICoinPeriod[]> => {
+    const url = `price/v1/statistics/${slug}?convert=${currency}`
+    const { statistics } = await this.fetch(url)
+    return statistics
   }
-  trending = async ({
-    limit,
-  }: ITrendingCoinsParams): Promise<ITrendingCoins> => {
-    const url = `v1/trending-tokens?limit=${limit}`
-    return await this.fetch<ITrendingCoins>(url)
+  coin = async (slug: string): Promise<ICoin> => {
+    const url = `price/v1/token-price/${slug}`
+    return await this.fetch(url)
   }
-  showroom = async (): Promise<IShowroom> => {
-    const url = 'v1/showroom/tokens/statistic'
-    const response = await this.fetch(url)
-    return response.data
+  metaData = async (slug: string): Promise<ICoinMetaData> => {
+    const url = `meta/v1/tokens/${slug}`
+    const { data } = await this.fetch(url)
+    return data
   }
 }
 

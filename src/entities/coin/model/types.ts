@@ -1,5 +1,4 @@
 export interface ICoin {
-  icon?: string
   active: boolean
   app_symbol: string
   app_tradable: boolean
@@ -16,49 +15,67 @@ export interface ICoin {
   usd_price_change_24h: number
   usd_volume_24h: number
 }
-export interface ITopMovers {
-  icon?: string
+
+export type PriceChartTuple = [time: number, price: number, cap: number]
+
+export interface ICoinChartResponse {
+  prices: PriceChartTuple[]
+  usd_price_change: number
+}
+export interface ICoinPeriod {
+  period: '1d' | '7d' | '30d' | '90d' | '365d' | 'all'
+  high: number
+  low: number
+}
+export interface ICoinMetaData {
   name: string
-  symbol: string
-  slug: string
-  usd_price: number
-  token_id: number
-  prices: number[]
-  usd_price_change_24h: number
-}
-export interface IFiltersCoins {
-  data: ICoin[]
-  total: number
-}
-export interface IFiltersCoinsParams {
-  page: number
-  limit: number
-  sort?:
-    | 'type'
-    | 'createdTime'
-    | 'tokenId'
-    | 'name'
-    | 'slug'
-    | 'symbol'
-    | 'rank'
-  direction?: 'DESC' | 'ASC'
-}
-export interface ITopMoversParams {
-  direction?: 1 | -1
-  depth: number
-}
-export interface ITrendingCoinsParams {
-  limit: number
-}
-export interface ITrendingCoins {
   slug: string
   symbol: string
-  name: string
-  token_id: number
-  usd_price_change_24h: number
+  active: true
+  tags: string[]
+  description: string
+  platform: []
+  icon: string
+  id: number
+  source_slug: string
+  website_urls: string[]
+  whitepaper_urls: string[]
+  explorer_urls: string[]
+  sourcecode_urls: string[]
+  message_board_urls: unknown[]
+  announcement_urls: unknown[]
+  chat_urls: unknown[]
+  telegram_urls: unknown[]
+  discord_urls: unknown[]
+  reddit_urls: unknown[]
+  twitter_urls: unknown[]
+  rss_feeds: [
+    {
+      source: string
+      url: string
+      filters: string
+    },
+  ]
+  is_defi_swap: boolean
+  meta_title: string
+  trading_view_symbol: string
+  trading_view_status: number
+  price_engine_enabled: boolean
 }
-export interface IShowroom {
-  market_cap: number
-  market_cap_change_rate: number
-  samples: { time: number; market_cap: number }[]
+export type ChartPeriodType =
+  | 'h'
+  | 'd'
+  | 'w'
+  | '30d'
+  | '90d'
+  | '180d'
+  | '365d'
+  | 'all'
+export interface IChartParams {
+  period: ChartPeriodType
+  slug: string
+}
+export interface ICoinStatisticsParams {
+  slug: string
+  currency: string
 }
