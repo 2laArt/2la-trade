@@ -1,6 +1,6 @@
 import { formatPercentage, priceWithSuffix } from '@/shared/lib'
 import React from 'react'
-import { coinServices } from '@/entities/coin/model'
+import { coinsServices } from '@/entities/coins-list/model'
 import { Percentage } from '@/shared/ui/percentage'
 import { SmallChart } from '@/features/small-chart'
 import { NextPage } from 'next'
@@ -9,7 +9,7 @@ const layout: NextPage<{
   children: React.ReactNode
 }> = async ({ children }) => {
   const { market_cap, market_cap_change_rate, samples } =
-    await coinServices.showroom()
+    await coinsServices.showroom()
   const marketCapPrices = samples.map((i) => i.market_cap)
   const marketCap = priceWithSuffix(market_cap, '$')
   const changeRate = formatPercentage(market_cap_change_rate)

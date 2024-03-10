@@ -1,4 +1,7 @@
-import { coinServices, type IFiltersCoinsParams } from '@/entities/coin/model'
+import {
+  coinsServices,
+  type IFiltersCoinsParams,
+} from '@/entities/coins-list/model'
 import { CoinTable } from '@/widget/coin-table'
 import { type NextPage } from 'next'
 
@@ -10,7 +13,7 @@ const queryParams: IFiltersCoinsParams = {
 }
 
 const RecentlyAdded: NextPage = async () => {
-  const { data } = await coinServices.filters(queryParams)
+  const { data } = await coinsServices.filters(queryParams)
   return (
     <div>
       <CoinTable

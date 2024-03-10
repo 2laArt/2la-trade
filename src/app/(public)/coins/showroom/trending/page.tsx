@@ -1,4 +1,4 @@
-import { coinServices } from '@/entities/coin/model'
+import { coinsServices } from '@/entities/coins-list/model'
 import { CoinTable } from '@/widget/coin-table'
 import { type NextPage } from 'next'
 
@@ -7,7 +7,7 @@ const queryParams = {
 }
 
 const RecentlyAdded: NextPage = async () => {
-  const data = await coinServices.trending(queryParams)
+  const data = await coinsServices.trending(queryParams)
   return (
     <div>
       <CoinTable

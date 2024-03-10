@@ -1,10 +1,10 @@
-import { ITopMoversParams, coinServices } from '@/entities/coin/model'
+import { ITopMoversParams, coinsServices } from '@/entities/coins-list/model'
 import { CoinTable } from '@/widget/coin-table'
 import { NextPage } from 'next'
 const queryParams: ITopMoversParams = { depth: 20, direction: -1 }
 
 const TopGainers: NextPage = async () => {
-  const data = await coinServices.topMovers(queryParams)
+  const data = await coinsServices.topMovers(queryParams)
   return (
     <div>
       <CoinTable
