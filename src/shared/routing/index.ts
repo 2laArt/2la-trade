@@ -4,6 +4,7 @@ export const paths = {
   dashboard: '/dashboard',
   trade: '/trade',
   coinCategories: '/coins/categories',
+  coinSlug: (slug: string) => `/coins/${slug}`,
   coinShowroom: (
     filter:
       | 'top-gainers'
