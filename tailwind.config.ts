@@ -22,13 +22,8 @@ const config: Config = {
       center: true,
       padding: {
         DEFAULT: '0.5rem',
-        md: '1rem',
-        lg: '2rem',
-        '2xl': '3rem',
       },
       screens: {
-        md: '900px',
-        lg: '1024px',
         '2xl': '1400px',
       },
     },
