@@ -11,7 +11,9 @@
   );
   background-size: 800px 100px;
 }
-
+.card {
+  @apply dark:bg-slate-900 rounded-sm bg-white;
+}
 @keyframes wave {
   0% {
     background-position: -468px 0;
