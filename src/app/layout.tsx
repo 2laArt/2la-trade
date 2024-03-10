@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
-import './globals.css'
+import './styles/globals.css'
 import { AppProvider } from './providers'
 import { cn } from '@/shared/lib'
-
+import NextTopLoader from 'nextjs-toploader'
 const inter = Montserrat({ subsets: ['latin'], variable: '--font' })
 
 export const metadata: Metadata = {
@@ -18,7 +18,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning={true}>
-      <body className={cn(inter.className, ' bg-background antialiased ')}>
+      <body className={cn(inter.className, 'bg-background antialiased')}>
+        <NextTopLoader />
         <AppProvider>{children}</AppProvider>
       </body>
     </html>
