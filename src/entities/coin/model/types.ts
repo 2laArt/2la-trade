@@ -15,7 +15,31 @@ export interface ICoin {
   usd_price_change_24h: number
   usd_volume_24h: number
 }
-
+export interface ICoinBySlug {
+  app_symbol: string
+  app_tradable: boolean
+  btc_marketcap: number
+  btc_price: number
+  btc_price_change_24h: number
+  btc_volume_24h: number
+  circulating_supply: number
+  defi_tradable: boolean
+  exchange_tradable: boolean
+  max_supply: number
+  price_update_time: number
+  prices: number[]
+  rank: number
+  slug: string
+  token_dominance_rate: unknown
+  token_id: number
+  total_supply: number
+  update_time: number
+  usd_marketcap: number
+  usd_price: number
+  usd_price_change_24h: number
+  usd_price_change_24h_abs: number
+  usd_volume_24h: number
+}
 export type PriceChartTuple = [time: number, price: number, cap: number]
 
 export interface ICoinChartResponse {
@@ -77,5 +101,5 @@ export interface IChartParams {
 }
 export interface ICoinStatisticsParams {
   slug: string
-  currency: string
+  currency?: string
 }

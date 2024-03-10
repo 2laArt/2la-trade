@@ -1,12 +1,12 @@
 import { ApiInstance } from '@/shared/api'
 import type {
   IChartParams,
-  ICoin,
+  ICoinBySlug,
   ICoinChartResponse,
   ICoinMetaData,
   ICoinPeriod,
   ICoinStatisticsParams,
-} from './types.ts'
+} from './types'
 
 const baseUrl = `${process.env.NEXT_PUBLIC_CRYPTO_COM_URL}`
 
@@ -26,7 +26,7 @@ class CoinServices extends ApiInstance {
     const { statistics } = await this.fetch(url)
     return statistics
   }
-  coin = async (slug: string): Promise<ICoin> => {
+  coin = async (slug: string): Promise<ICoinBySlug> => {
     const url = `price/v1/token-price/${slug}`
     return await this.fetch(url)
   }
