@@ -5,7 +5,7 @@ import React from 'react'
 import { coinColumns } from './columns'
 import { SelectDisplayColumn } from './select-display-column'
 import { CoinsTableFooter } from './footer'
-import { ITopMovers } from '@/entities/coin'
+import { ITopMovers } from '@/entities/coins-list'
 import { CoinTableBody } from './body-rows'
 import { useLoadTable, useTableCondition, useTablePagination } from '../lib'
 

@@ -1,4 +1,4 @@
-import { type ITopMovers } from '@/entities/coin'
+import { type ITopMovers } from '@/entities/coins-list'
 import {
   ColumnDef,
   ColumnFiltersState,

@@ -1,4 +1,4 @@
-import { ITopMovers } from '@/entities/coin'
+import { ITopMovers } from '@/entities/coins-list'
 import { ColumnDef } from '@tanstack/react-table'
 import { useCoinTable, useCoinTableSkeleton } from '..'
 import React from 'react'

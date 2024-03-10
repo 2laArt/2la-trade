@@ -1,6 +1,6 @@
-import { ITopMovers } from '@/entities/coin'
+import { ITopMovers } from '@/entities/coins-list'
 import React from 'react'
-import { useTableSearchParams } from '../use-table-search-params'
+import { useCustomSearchParams } from '@/shared/lib/hooks'
 
 export const useTablePagination = ({
   data,
@@ -11,17 +11,18 @@ export const useTablePagination = ({
   limit: number
   total?: number
 }) => {
-  const { setSearchParams, page } = useTableSearchParams()
+  const { setSearchParams, getSearchParam } = useCustomSearchParams()
+  const page = Number(getSearchParam('page')) || 1
   const [coins, setCoins] = React.useState<Partial<ITopMovers>[]>()
   const totalPages = total / limit
 
   const setPrevPage = () => {
     if (!(page > 1)) return
-    setSearchParams([{ name: 'page', value: `${page - 1}` }])
+    setSearchParams([{ key: 'page', value: `${page - 1}` }])
   }
   const setNextPage = () => {
     if (!(totalPages > page)) return
-    setSearchParams([{ name: 'page', value: `${page + 1}` }])
+    setSearchParams([{ key: 'page', value: `${page + 1}` }])
   }
 
   React.useEffect(() => {

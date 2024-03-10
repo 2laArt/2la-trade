@@ -1,4 +1,4 @@
-import { ITopMovers } from '@/entities/coin'
+import { ITopMovers } from '@/entities/coins-list'
 import { Column } from '@tanstack/react-table'
 import React from 'react'
 import { useMediaQuery } from 'react-responsive'

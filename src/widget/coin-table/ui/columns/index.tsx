@@ -4,7 +4,7 @@ import { CaretSortIcon } from '@radix-ui/react-icons'
 import { formatToCurrency, priceWithSuffix } from '@/shared/lib'
 import React from 'react'
 import { SmallChart } from '@/features/small-chart'
-import { type ITopMovers } from '@/entities/coin'
+import { type ITopMovers } from '@/entities/coins-list'
 
 const HeaderButton: React.FC<{
   column: Column<Partial<ITopMovers>, unknown>
@@ -12,7 +12,7 @@ const HeaderButton: React.FC<{
 }> = ({ column, text }) => (
   <Button
     variant="ghost"
-    className="uppercase text-center max-md:p-1"
+    className="uppercase text-center max-md:p-1 z-[2]"
     onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
   >
     {text}
@@ -31,7 +31,7 @@ export const coinColumns: ColumnDef<Partial<ITopMovers>>[] = [
         <div className="ml-2 capitalize flex items-center gap-2">
           <Checkbox
             size="lg"
-            className="max-sm:w-4"
+            className="max-sm:w-4 z-[2]"
             variant="star"
             checked={row.getIsSelected()}
             onCheckedChange={(value) => row.toggleSelected(!!value)}
@@ -146,7 +146,7 @@ export const coinColumns: ColumnDef<Partial<ITopMovers>>[] = [
         <div className="text-right">
           {!!value && (
             <Button
-              className="bg-blue-600 max-sm:text-xs max-sm:px-2 text-white"
+              className="bg-blue-600 max-sm:text-xs max-sm:px-2 text-white relative z-[2]"
               variant={'outline'}
             >
               Trade
