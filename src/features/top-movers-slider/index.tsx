@@ -4,7 +4,7 @@ import React from 'react'
 import Autoplay from 'embla-carousel-autoplay'
 import { Carousel, CarouselContent, CarouselItem } from '@/shared/ui'
 import { cn } from '@/shared/lib'
-import { CoinCard, type ITopMovers } from '@/entities/coin'
+import { CoinCard, type ITopMovers } from '@/entities/coins-list'
 
 interface ITopMoversSlider {
   coinList?: ITopMovers[]
