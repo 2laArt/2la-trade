@@ -13,5 +13,5 @@ export const priceWithSuffix = (num: number, prefix: string) => {
     return formatted
   }
 
-  return num
+  return num.toString()
 }
