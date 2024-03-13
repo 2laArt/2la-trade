@@ -33,9 +33,37 @@ const coinLinks: INavLink[] = [
     description: '',
   },
 ]
+
 const nftLinks: INavLink[] = [
   {
-    href: paths.nftCollections,
+    title: 'Ethereum NFTs',
+    href: paths.nftCollections('ethereum'),
+    description: '',
+  },
+  {
+    title: 'Cronos NFTs',
+    href: paths.nftCollections('cronos'),
+    description: '',
+  },
+  {
+    title: 'Solana NFTs',
+    href: paths.nftCollections('solana'),
+    description: '',
+  },
+  {
+    title: 'Crypto.org NFTs',
+    href: paths.nftCollections('crypto-org'),
+    description: '',
+  },
+  {
+    title: 'Polygon NFTs',
+    href: paths.nftCollections('polygon'),
+    description: '',
+  },
+]
+const nftNavLinks: INavLink[] = [
+  {
+    href: paths.nftCollections('ethereum'),
     title: 'NFT Collections',
     description: 'This list displays all nft collections',
   },
@@ -50,4 +78,4 @@ const nftLinks: INavLink[] = [
     description: 'Guidelines for use and application',
   },
 ]
-export { type INavLink, coinLinks, nftLinks }
+export { type INavLink, coinLinks, nftNavLinks, nftLinks }

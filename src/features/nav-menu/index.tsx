@@ -1,8 +1,16 @@
 'use client'
 
-import { INavLink, coinLinks, nftLinks } from './config/data'
-import { NavMenuDesktop, ShowroomLinks } from './ui'
+import { type INavLink, coinLinks, nftLinks, nftNavLinks } from './config/data'
+import { NavMenuDesktop, NavMenuMobile, NavThroughSection } from './ui'
 
 const NavMenu = () => <NavMenuDesktop />
 
-export { NavMenu, type INavLink, coinLinks, nftLinks, ShowroomLinks }
+export {
+  NavMenu,
+  type INavLink,
+  coinLinks,
+  nftLinks,
+  nftNavLinks,
+  NavMenuDesktop,
+  NavThroughSection,
+}

@@ -1,3 +1,3 @@
 export { NavMenuDesktop } from './desktop'
 export { NavMenuMobile } from './mobile'
-export { ShowroomLinks } from './showroom-nav'
+export { NavThroughSection } from './nav-through-section'

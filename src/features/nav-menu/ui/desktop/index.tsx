@@ -11,7 +11,7 @@ import {
 } from '@/shared/ui'
 import Link from 'next/link'
 import { NavBanner, NavListItem } from './ui'
-import { coinLinks, nftLinks } from '@/features/nav-menu'
+import { coinLinks, nftNavLinks } from '@/features/nav-menu'
 import { Bitcoin } from 'lucide-react'
 
 export const NavMenuDesktop = () => {
@@ -32,7 +32,7 @@ export const NavMenuDesktop = () => {
                       of the top NFTs on the Ethereum blockchain."
                 />
               </li>
-              {nftLinks.map(({ description, href, title }) => (
+              {nftNavLinks.map(({ description, href, title }) => (
                 <NavListItem key={title} href={href} title={title}>
                   {description}
                 </NavListItem>
