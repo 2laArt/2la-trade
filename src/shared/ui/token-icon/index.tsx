@@ -18,7 +18,7 @@ export const TokenIcon: FC<{
     img.src = url
     img.addEventListener('load', () => setIconSrc(url))
     img.addEventListener('error', () =>
-      console.error(`${slug} image is not exist`)
+      console.info(`${slug} image is not exist`)
     )
   }, [])
   useEffect(() => {
