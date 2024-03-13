@@ -1,34 +1,32 @@
-import { Column, ColumnDef } from '@tanstack/react-table'
+import { ColumnDef } from '@tanstack/react-table'
 import { Button, Checkbox, Percentage, TokenIcon } from '@/shared/ui'
-import { CaretSortIcon } from '@radix-ui/react-icons'
 import { formatToCurrency, priceWithSuffix } from '@/shared/lib'
 import React from 'react'
 import { SmallChart } from '@/features/small-chart'
 import { type ITopMovers } from '@/entities/coins-list'
+import { ColumnFilterButton } from '@/features/table-section'
 
-const HeaderButton: React.FC<{
-  column: Column<Partial<ITopMovers>, unknown>
-  text: string
-}> = ({ column, text }) => (
-  <Button
-    variant="ghost"
-    className="uppercase text-center max-md:p-1 z-[2]"
-    onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-  >
-    {text}
-    <CaretSortIcon className="ml-2 h-4 w-4" />
-  </Button>
-)
 export const coinColumns: ColumnDef<Partial<ITopMovers>>[] = [
   {
     id: 'count',
-    accessorFn: ({ rank, token_id }) => `${rank ?? ''}!${token_id}`,
+    accessorFn: ({ rank, token_id }) => ({ rank, token_id }),
     enableHiding: false,
-    header: ({ column }) => <HeaderButton column={column} text="#" />,
+    sortingFn: (rowA, rowB, columnId) => {
+      const rankA = (rowA.getValue(columnId) as Partial<ITopMovers>).rank
+      const rankB = (rowB.getValue(columnId) as Partial<ITopMovers>).rank
+      if (rankA && rankB) return rankA < rankB ? 1 : rankA > rankB ? -1 : 0
+
+      const idA = (rowA.getValue(columnId) as Partial<ITopMovers>).token_id
+      const idB = (rowB.getValue(columnId) as Partial<ITopMovers>).token_id
+      if (idA && idB) return idA < idB ? 1 : idA > idB ? -1 : 0
+
+      return -1
+    },
+    header: ({ column }) => <ColumnFilterButton column={column} text="#" />,
     cell: ({ row }) => {
-      const [rank, token_id] = (row.getValue('count') as string).split('!')
+      const { rank, token_id } = row.getValue('count') as Partial<ITopMovers>
       return (
-        <div className="ml-2 capitalize flex items-center gap-2">
+        <div className="capitalize flex items-center gap-2">
           <Checkbox
             size="lg"
             className="max-sm:w-4 z-[2]"
@@ -46,22 +44,36 @@ export const coinColumns: ColumnDef<Partial<ITopMovers>>[] = [
   {
     id: 'naming',
     enableHiding: false,
-    accessorFn: ({ name, symbol, slug, token_id }) =>
-      `${name}!${symbol}!${slug}!${token_id}`,
+    accessorFn: ({ name, symbol, slug, token_id }) => ({
+      name,
+      symbol,
+      slug,
+      token_id,
+    }),
+    sortingFn: (rowA, rowB, columnId) => {
+      const a = (rowA.getValue(columnId) as Partial<ITopMovers>).name
+      const b = (rowB.getValue(columnId) as Partial<ITopMovers>).name
+      if (a && b) return a < b ? 1 : a > b ? -1 : 0
+
+      return -1
+    },
     header: ({ column }) => {
-      return <HeaderButton column={column} text="Name" />
+      return (
+        <div className="text-left">
+          <ColumnFilterButton column={column} text="Name" />
+        </div>
+      )
     },
     cell: ({ row }) => {
-      const [name, symbol, slug, token_id] = (
-        row.getValue('naming') as string
-      ).split('!')
-
+      const { name, symbol, slug, token_id } = row.getValue(
+        'naming'
+      ) as Partial<ITopMovers>
       return (
         <div className="flex items-center py-2">
           <TokenIcon
-            slug={slug}
-            symbol={symbol}
-            token_id={+token_id}
+            slug={slug || 'coin'}
+            symbol={symbol || 'coin'}
+            token_id={token_id || 0}
             className="mr-2"
           />
           <span className="inline-block truncate text-left max-w-32">
@@ -74,27 +86,51 @@ export const coinColumns: ColumnDef<Partial<ITopMovers>>[] = [
   },
   {
     id: 'price',
-    accessorKey: 'usd_price',
-    header: ({ column }) => <HeaderButton column={column} text="Price" />,
+    accessorFn: ({ usd_price, usd_price_change_24h }) => ({
+      usd_price,
+      usd_price_change_24h,
+    }),
+    sortingFn: (rowA, rowB, columnId) => {
+      const a = (rowA.getValue(columnId) as Partial<ITopMovers>).usd_price
+      const b = (rowB.getValue(columnId) as Partial<ITopMovers>).usd_price
+      if (a && b) return a < b ? 1 : a > b ? -1 : 0
+      return -1
+    },
+    header: ({ column }) => <ColumnFilterButton column={column} text="Price" />,
     cell: ({ row }) => {
-      const value: number = row.getValue('price')
+      const { usd_price, usd_price_change_24h } = row.getValue(
+        'price'
+      ) as Partial<ITopMovers>
 
-      const content = !!value
-        ? `$ ${formatToCurrency(value, {
+      const price = !!usd_price
+        ? `$ ${formatToCurrency(+usd_price, {
             maximumFractionDigits: 2,
           })}`
         : 'N/A'
-      return <span>{content}</span>
+      return (
+        <div>
+          <span className="ml-1">{price}</span>
+          <span className="max-md:block hidden mt-1">
+            {usd_price_change_24h ? (
+              <Percentage percent={usd_price_change_24h} />
+            ) : (
+              'N/A'
+            )}
+          </span>
+        </div>
+      )
     },
   },
   {
     id: '24H Change',
     accessorKey: 'usd_price_change_24h',
-    header: ({ column }) => <HeaderButton column={column} text="24H Change" />,
+
+    header: ({ column }) => (
+      <ColumnFilterButton column={column} text="24H Change" />
+    ),
     cell: ({ row }) => {
       const value = row.getValue('24H Change') as number
-      if (!value) return <span>N/A</span>
-      return <Percentage percent={value} className="pl-7" />
+      return value ? <Percentage percent={value} /> : <span>N/A</span>
     },
   },
   {
