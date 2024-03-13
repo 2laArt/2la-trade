@@ -14,6 +14,9 @@ export const paths = {
       | 'most-popular'
   ) => `/coins/showroom/${filter}`,
   nftGuide: '/nft/guide',
-  nftCollections: '/nft/collections',
+  nftCollections: (
+    section: 'ethereum' | 'cronos' | 'solana' | 'crypto-org' | 'polygon'
+  ) => `/nft/collections/${section}`,
+  nftSlug: (slug: string) => `/nft/${slug}`,
   nftWatch: '/nft/whale-watch',
 }
