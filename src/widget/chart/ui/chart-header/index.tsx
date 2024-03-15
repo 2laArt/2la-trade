@@ -29,7 +29,7 @@ export const ChartHeader: React.FC<IChartHeader> = ({
 }) => {
   const isActive = (arg: ChartPeriodType) => period.trim() === arg.trim()
   return (
-    <div className="flex max mb-6 justify-between">
+    <div className="flex gap-y-4 mb-6 justify-between flex-col md:flex-row">
       <h4 className="capitalize font-semibold">
         {name} Price Chart ({currency})
       </h4>

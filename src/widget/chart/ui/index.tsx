@@ -15,7 +15,8 @@ const periodWrapper = (period: ChartPeriodType) => {
 export const CoinChart: React.FC<{
   slug: string
   period?: ChartPeriodType
-}> = ({ slug, period = 'd' }) => {
+  className?: string
+}> = ({ slug, period = 'd', className }) => {
   const wPeriod = React.useMemo(() => periodWrapper(period), [period])
   const { data, isLoading } = useQueryCoinChart({ slug, period: wPeriod })
   const { setSearchParams } = useCustomSearchParams(false)
@@ -35,9 +36,14 @@ export const CoinChart: React.FC<{
     })
     setChartData(newData)
   }, [data, period, isLoading, wPeriod])
-
+  if (!data?.prices.length && !isLoading)
+    return (
+      <div className="my-4 text-lg font-semibold flex justify-center text-center items-center min-h-52 border border-gray-500">
+        Unfortunately, this data could not be obtained
+      </div>
+    )
   return isLoading ? (
-    <div className="relative w-full h-full">
+    <div className="relative w-full h-full min-h-56 min-w-full">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         <Spinner size={50} />
       </div>
@@ -48,7 +54,7 @@ export const CoinChart: React.FC<{
       <CanvasChart
         prices={chartData?.data}
         labels={chartData?.labels}
-        isLoading={isLoading}
+        className={className}
       />
     </div>
   )

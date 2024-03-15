@@ -3,15 +3,20 @@ import { Chart, ChartData } from 'chart.js/auto'
 import React from 'react'
 import { chartOptions } from '../../config'
 import { useChartTheme } from '../../lib'
+import { useMediaQuery } from 'react-responsive'
+import { cn } from '@/shared/lib'
 
 export const CanvasChart: React.FC<{
   prices?: number[]
   labels?: string[]
-  isLoading?: boolean
-}> = ({ prices, labels, isLoading }) => {
+  className?: string
+}> = ({ prices, labels, className }) => {
   const ref = React.useRef<HTMLCanvasElement>(null)
   const coinChart = React.useRef<Chart>()
   const colors = useChartTheme()
+  const is768 = useMediaQuery({
+    query: '(max-width: 768px)',
+  })
   console.log('chart render')
 
   const chartDataOptions: ChartData = React.useMemo(
@@ -26,6 +31,7 @@ export const CanvasChart: React.FC<{
           fill: true,
           pointRadius: 0,
           pointBorderWidth: 0,
+
           pointStyle: 'circle',
           pointHoverBorderWidth: 1,
           pointBorderColor: 'white',
@@ -48,6 +54,22 @@ export const CanvasChart: React.FC<{
       coinChart.current?.destroy()
     }
   }, [chartDataOptions, ref])
+  React.useEffect(() => {
+    if (!coinChart.current) return
+    if (is768) {
+      coinChart.current.options.aspectRatio = 1 / 1
+
+      if (coinChart.current.options.datasets?.line) {
+        coinChart.current.options.datasets.line.borderWidth = 1.5
+      }
+      return
+    }
+    coinChart.current.options.aspectRatio = 2 / 1
+
+    if (coinChart.current.options.datasets?.line) {
+      coinChart.current.options.datasets.line.borderWidth = 3
+    }
+  }, [coinChart, is768])
   React.useEffect(() => {
     if (!coinChart.current) return
     if (
@@ -75,7 +97,7 @@ export const CanvasChart: React.FC<{
         ref={ref}
         id="coinChart"
         aria-label="Cryptocurrency Chart"
-        // className="bg-sky-200"
+        className={cn('w-full ', className)}
         role="img"
       ></canvas>
     </>
