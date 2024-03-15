@@ -9,12 +9,12 @@ export const NavThroughSection = React.memo(
     const pathname = usePathname()
 
     return (
-      <div className="flex gap-5">
+      <div className="flex gap-5 max-[850px]:gap-2 max-md:flex-wrap py-5 max-md:py-2">
         <Each
           arr={links}
           render={(item) => (
             <ActiveLink
-              className="py-2 px-4 transition-colors rounded-full hover:text-white dark:hover:bg-blue-500 hover:bg-blue-500 dark:bg-slate-900 bg-white "
+              className=" max-[850px]:py-1  max-[850px]:px-2  max-[850px]:text-sm py-2 px-4 transition-colors rounded-full hover:text-white dark:hover:bg-blue-500 hover:bg-blue-500 dark:bg-slate-900 bg-white "
               activeClass="bg-blue-500 dark:bg-blue-500 text-white"
               pathname={pathname}
               href={item.href}

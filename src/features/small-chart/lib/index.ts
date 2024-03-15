@@ -6,13 +6,15 @@ export const getPoints = ({
   current: SVGSVGElement
 }) => {
   const { height, width } = current.getBoundingClientRect()
-
-  if (!arr || !arr.length) {
+  const getLine = () => {
     const half = height / 2
     return `0 ${half}, ${width} ${half}`
   }
+  if (!arr || !arr.length) return getLine()
 
   const [max, min] = [Math.max.apply(this, arr), Math.min.apply(this, arr)]
+  if (max === min) return getLine()
+
   const range = max - min
   const step = width / arr.length
   let points = ''

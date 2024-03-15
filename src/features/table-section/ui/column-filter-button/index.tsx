@@ -15,11 +15,14 @@ export const ColumnFilterButton = <R extends Object>({
 }): React.ReactElement => (
   <Button
     variant="ghost"
-    className={cn('uppercase text-center px-2 max-md:p-1 z-[2]', className)}
+    className={cn(
+      'uppercase text-center px-2 max-md:p-1 z-[2] max-sm:text-xs ',
+      className
+    )}
     onClick={() => column.toggleSorting()}
   >
-    {text}
-    <CaretSortIcon className="ml-2 h-4 w-4" />
+    <span className="inline-block truncate max-sm:max-w-24">{text}</span>
+    <CaretSortIcon className="ml-2 h-4 w-4  max-sm:m-0" />
   </Button>
 )
 // onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}

@@ -8,14 +8,16 @@ import {
 import { ChevronDownIcon } from 'lucide-react'
 import React from 'react'
 import { Column } from '@tanstack/react-table'
-import { type ITopMovers } from '@/entities/coin'
-export const SelectDisplayColumn: React.FC<{
-  columns: Column<Partial<ITopMovers>, unknown>[]
+export const SelectDisplayColumn = <R extends Object>({
+  columns,
+  title,
+}: {
+  columns: Column<R, unknown>[]
   title?: string
-}> = ({ columns, title }) => {
+}): React.ReactElement => {
   return (
     <div className="flex items-center py-4">
-      <h3 className="text-lg font-semibold">
+      <h3 className="text-lg max-md:text-base font-semibold">
         {title || 'Today is Cryptocurrency Prices'}
       </h3>
       <DropdownMenu>

@@ -29,7 +29,7 @@ export const TableSectionBody = <R extends Object>({
               <Each
                 arr={row.getVisibleCells()}
                 render={(cell) => (
-                  <TableCell className="px-4 py-2" key={cell.id}>
+                  <TableCell className="px-4 py-2 max-sm:px-1" key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 )}
