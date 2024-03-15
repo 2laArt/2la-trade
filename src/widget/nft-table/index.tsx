@@ -3,11 +3,12 @@ import { ITableSectionExternal, TableSection } from '@/features/table-section'
 import { createNftColumns } from './columns'
 import Link from 'next/link'
 import { paths } from '@/shared/routing'
-import { INft } from '@/entities/nft/model'
+import { type INft } from '@/entities/nft/model'
 
 const mobile = ['']
 const laptop = ['VOLUME']
-const getHref = (slug?: string) => paths.nftSlug(slug || '')
+const getHref = (slug: string, blockchain: number) =>
+  paths.nftSlug(slug, blockchain)
 interface INftTable extends ITableSectionExternal<INft> {
   symbol: string
 }
@@ -20,7 +21,7 @@ export const NftTable = ({ symbol, ...props }: INftTable) => {
       mobileCols={mobile}
       TableRowLink={({ row }) => (
         <Link
-          href={getHref(row.original.slug)}
+          href={getHref(row.original.slug, row.original.blockchain)}
           className="absolute top-0 left-0 block w-full h-full z-[1]"
         />
       )}
