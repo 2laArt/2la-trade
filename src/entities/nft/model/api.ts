@@ -54,7 +54,8 @@ class NFTServices extends ApiInstance {
     blockchain,
     slug,
   }: INftBySlugParams): Promise<INftSocialInform> => {
-    const url = `v2/collection/social-information//${slug}?blockchain=${blockchain}`
+    const searchParams = this.getSearchParams({ blockchain })
+    const url = `v2/collection/social-information//${slug}?${searchParams}`
     const { data } = await this.fetch(url)
     return data
   }
@@ -68,3 +69,4 @@ class NFTServices extends ApiInstance {
 export const nftServices = new NFTServices(baseUrl)
 
 //  https://price-api.crypto.com/nft/v2/collection/trending?blockchain=2
+// https://price-api.crypto.com/nft/v2/collection/metadata/boredapeyachtclub?blockchain=0

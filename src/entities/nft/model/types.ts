@@ -119,7 +119,7 @@ export interface INftCollectionsParams {
 }
 export interface INftBySlugParams {
   slug: string
-  blockchain: NftBlockchainType
+  blockchain?: NftBlockchainType
 }
 export interface INftStatisticParams {
   blockchain: NftBlockchainType
