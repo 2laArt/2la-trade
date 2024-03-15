@@ -44,8 +44,8 @@ const CoinBySlug: NextPage<{
       ) : (
         <div className="skeleton rounded-xl mb-9 w-48 h-10"></div>
       )}
-      <div className="flex gap-5 ">
-        <div className="card lg:w-2/3 p-6">
+      <div className="flex flex-col lg:flex-row gap-5 items-start">
+        <div className="card p-6 lg:w-2/3 w-full">
           {isData && (
             <div className="mb-10">
               <h4 className="mb-3 text-3xl font-medium">
@@ -54,7 +54,7 @@ const CoinBySlug: NextPage<{
               <div>
                 <span className="text-gray-500">
                   {coin.btc_price.toPrecision(3)} {coinMeta.symbol}
-                </span>{' '}
+                </span>
                 <span
                   className={cn(
                     'mx-2',
@@ -69,7 +69,9 @@ const CoinBySlug: NextPage<{
               </div>
             </div>
           )}
-          <CoinChart slug={slug} period={period} />
+          <div className="w-full">
+            <CoinChart slug={slug} period={period} className="max-sm:-mx-7" />
+          </div>
           {isData && (
             <ListCapitalizations
               cap={coin.usd_marketcap}
@@ -87,7 +89,7 @@ const CoinBySlug: NextPage<{
             description={coinMeta?.description}
           />
         </div>
-        <div className="flex flex-col gap-5 w-1/3">
+        <div className="flex flex-col w-full gap-5 lg:w-1/3">
           <CoinStatistics slug={slug} />
           {coinMeta && <CoinTags tags={coinMeta.tags} count={20} />}
         </div>
