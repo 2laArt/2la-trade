@@ -21,7 +21,7 @@ export const ListCapitalizations: React.FC<{
   prefix,
 }) => {
   return (
-    <ul className="flex mt-8 justify-between items-center [&>li>h6]:text-xs [&>li>h6]:text-gray-500 [&>li>h6]:font-bold [&>li>h6]:mb-2">
+    <ul className="flex mt-8 md:justify-between flex-wrap items-center [&>li>h6]:text-xs [&>li>h6]:text-gray-500 [&>li>h6]:font-bold [&>li>h6]:mb-2 gap-y-4 gap-2 text-sm md:text-base md:flex-nowrap">
       <li>
         <h6>Market Cap ({currency})</h6>
         <span> {priceWithSuffix(cap, prefix)}</span>
@@ -33,21 +33,18 @@ export const ListCapitalizations: React.FC<{
       <li>
         <h6>Circulating Supply</h6>
         <span>
-          {' '}
           {priceWithSuffix(supply, '')} {symbol}
         </span>
       </li>
       <li>
         <h6>Max Supply</h6>
         <span>
-          {' '}
           {priceWithSuffix(max_supply, '')} {symbol}
         </span>
       </li>
       <li>
         <h6>Total Supply</h6>
         <span>
-          {' '}
           {priceWithSuffix(total_supply, '')} {symbol}
         </span>
       </li>

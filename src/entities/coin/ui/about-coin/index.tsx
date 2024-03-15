@@ -16,21 +16,22 @@ export const AboutCoin: React.FC<{
 
   const variants = {
     H2: (item: Element, idx: number) => (
-      <h2 key={idx} className="text-lg font-semibold py-5">
+      <h2 key={idx} className="md:text-lg text-base font-semibold py-5">
         {item.textContent}
       </h2>
     ),
     P: (item: Element, idx: number) => <p key={idx}>{item.textContent}</p>,
   }
-  console.log(description)
 
   return (
     <div className="">
-      <h3 className="text-2xl font-medium mb-5 mt-10">About {name}</h3>
+      <h3 className="md:text-2xl text-lg font-medium mb-5 mt-10">
+        About {name}
+      </h3>
 
       <div
         className={cn(
-          'grid grid-rows-[0fr] transition-[grid] duration-1000',
+          'grid grid-rows-[0fr] transition-[grid] duration-1000 text-sm md:text-base',
           isOpen && 'grid-rows-[1fr]'
         )}
       >
