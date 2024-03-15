@@ -17,6 +17,7 @@ export const paths = {
   nftCollections: (
     section: 'ethereum' | 'cronos' | 'solana' | 'crypto-org' | 'polygon'
   ) => `/nft/collections/${section}`,
-  nftSlug: (slug: string) => `/nft/${slug}`,
+  nftSlug: (slug: string, blockchain: number) =>
+    `/nft/${slug}?blockchain=${blockchain}`,
   nftWatch: '/nft/whale-watch',
 }

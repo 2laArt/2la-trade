@@ -1,4 +1,8 @@
-export const priceWithSuffix = (num: number, prefix: string) => {
+export const priceWithSuffix = (
+  num: number,
+  prefix: string,
+  countFixed?: number
+) => {
   const map = [
     { suffix: 'T', threshold: 1e12 },
     { suffix: 'B', threshold: 1e9 },
@@ -9,9 +13,9 @@ export const priceWithSuffix = (num: number, prefix: string) => {
 
   const found = map.find((x) => Math.abs(num) >= x.threshold)
   if (found) {
-    const formatted = `${prefix} ${(num / found.threshold).toFixed(2)} ${found.suffix}`
+    const formatted = `${prefix} ${(num / found.threshold).toFixed(countFixed ?? 2)} ${found.suffix}`
     return formatted
   }
 
-  return num.toString()
+  return 'N/A'
 }
