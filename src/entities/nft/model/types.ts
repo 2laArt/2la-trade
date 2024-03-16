@@ -124,4 +124,4 @@ export interface INftBySlugParams {
 export interface INftStatisticParams {
   blockchain: NftBlockchainType
 }
-export type NftBlockchainType = 0 | 1 | 2 | 4
+export type NftBlockchainType = 0 | 1 | 2 | 3 | 4
