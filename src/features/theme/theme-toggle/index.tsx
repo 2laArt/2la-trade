@@ -1,7 +1,4 @@
 'use client'
-
-'use client'
-
 import * as React from 'react'
 import { Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
@@ -13,7 +10,7 @@ import {
 } from '@/shared/ui'
 import { Button } from '@/shared/ui'
 
-export function ModeToggle() {
+export const ModeToggle: React.FC = React.memo(() => {
   const { setTheme } = useTheme()
   return (
     <DropdownMenu modal={true}>
@@ -37,4 +34,6 @@ export function ModeToggle() {
       </DropdownMenuContent>
     </DropdownMenu>
   )
-}
+})
+
+ModeToggle.displayName = 'ModeToggle'
