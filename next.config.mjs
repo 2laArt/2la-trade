@@ -4,7 +4,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'static.crypto.com',
+        hostname: '**',
         pathname: '**',
       },
     ],
