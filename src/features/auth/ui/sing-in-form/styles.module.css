@@ -1,0 +1,17 @@
+.form_item {
+  @apply relative my-3;
+}
+.form_item input {
+  @apply bg-transparent text-base h-12 w-full box-border transition-shadow  pt-4 px-3 rounded-sm border border-solid border-gray-400 focus:shadow-md focus:shadow-blue-500/15 focus:border-blue-300 outline-none;
+}
+.form_item label {
+  @apply absolute pointer-events-none leading-[48px] transition-[0.3s] text-gray-400 left-3 top-0;
+}
+.form_item input:focus ~ label,
+.form_item input:not(:focus):valid ~ label {
+  @apply text-[11px] -top-2.5;
+}
+
+.form_submit {
+  @apply mt-6s;
+}
