@@ -12,7 +12,7 @@
   background-size: 800px 100px;
 }
 .card {
-  @apply dark:bg-slate-900 rounded-sm bg-white;
+  @apply bg-card dark:bg-slate-900 rounded-sm;
 }
 @keyframes wave {
   0% {
