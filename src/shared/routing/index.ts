@@ -1,6 +1,7 @@
 export const paths = {
   home: '/',
   auth: '/auth',
+  singIn: '/auth/sing-in',
   dashboard: '/dashboard',
   trade: '/trade',
   coinCategories: '/coins/categories',
