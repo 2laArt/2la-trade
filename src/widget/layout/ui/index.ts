@@ -1,2 +1,3 @@
 export { Logo } from './logo'
-export { Profile } from './profile'
+export { HeaderCart } from './header-cart'
+export { HeaderProfile } from './header-profile'
