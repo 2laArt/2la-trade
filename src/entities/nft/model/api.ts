@@ -20,26 +20,26 @@ class NFTServices extends ApiInstance {
   ): Promise<INftCollections> => {
     const searchParams = this.getSearchParams(params)
     const url = `v2/collection/assets?${searchParams}`
-    const { data } = await this.fetch(url)
+    const { data } = await this.fetch<{ data: INftCollections }>(url)
     return data
   }
   statistic = async ({
     blockchain,
   }: INftStatisticParams): Promise<INftStatistic> => {
     const url = `v2/collection/statistic?blockchain=${blockchain}`
-    const { data } = await this.fetch(url)
+    const { data } = await this.fetch<{ data: INftStatistic }>(url)
     return data
   }
   collectionTrending = async ({
     blockchain,
   }: INftStatisticParams): Promise<INft[]> => {
     const url = `v2/collection/trending?blockchain=${blockchain}`
-    const { data } = await this.fetch(url)
+    const { data } = await this.fetch<{ data: INft[] }>(url)
     return data
   }
   meta = async ({ blockchain, slug }: INftBySlugParams): Promise<INftMeta> => {
     const url = `v2/collection/metadata/${slug}?blockchain=${blockchain}`
-    const { data } = await this.fetch(url)
+    const { data } = await this.fetch<{ data: INftMeta }>(url)
     return data
   }
   sales = async ({
@@ -47,7 +47,7 @@ class NFTServices extends ApiInstance {
     slug,
   }: INftBySlugParams): Promise<INftSales> => {
     const url = `v2/collection/sales/${slug}?blockchain=${blockchain}`
-    const { data } = await this.fetch(url)
+    const { data } = await this.fetch<{ data: INftSales }>(url)
     return data
   }
   socialInform = async ({
@@ -56,7 +56,7 @@ class NFTServices extends ApiInstance {
   }: INftBySlugParams): Promise<INftSocialInform> => {
     const searchParams = this.getSearchParams({ blockchain })
     const url = `v2/collection/social-information//${slug}?${searchParams}`
-    const { data } = await this.fetch(url)
+    const { data } = await this.fetch<{ data: INftSocialInform }>(url)
     return data
   }
   whales = async (params: INftBySlugParams): Promise<INftWhalesWatch> => {

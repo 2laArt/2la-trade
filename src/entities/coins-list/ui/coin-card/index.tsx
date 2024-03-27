@@ -27,12 +27,7 @@ export const CoinCard: React.FC<ICoinCartProps> = ({
   } = coin
   const is640 = useMediaQuery({ query: '(min-width: 640px)' })
   return (
-    <div
-      className={cn(
-        'dark:bg-slate-900 bg-white p-2 sm:p-5 rounded-sm font-semibold',
-        className
-      )}
-    >
+    <div className={cn('card p-2 sm:p-5 rounded-sm font-semibold', className)}>
       <div className="flex justify-between items-center">
         <TokenIcon slug={slug} symbol={symbol} token_id={token_id} />
         {is640 ? (

@@ -1,5 +1,5 @@
 import type { IChartParams, ICoinStatisticsParams } from '../coin/model'
-import {
+import type {
   IFiltersCoinsParams,
   ITopMoversParams,
   ITrendingCoinsParams,
@@ -16,4 +16,6 @@ export const keyFactory = {
     'coin_statistics',
     params,
   ],
+  cart: (userId?: string) => ['cart', userId],
+  userById: (id: string) => ['user', id],
 }

@@ -23,7 +23,7 @@ class CoinServices extends ApiInstance {
     slug,
   }: ICoinStatisticsParams): Promise<ICoinPeriod[]> => {
     const url = `price/v1/statistics/${slug}?convert=${currency}`
-    const { statistics } = await this.fetch(url)
+    const { statistics } = await this.fetch<{ statistics: ICoinPeriod[] }>(url)
     return statistics
   }
   coin = async (slug: string): Promise<ICoinBySlug> => {
@@ -32,7 +32,7 @@ class CoinServices extends ApiInstance {
   }
   metaData = async (slug: string): Promise<ICoinMetaData> => {
     const url = `meta/v1/tokens/${slug}`
-    const { data } = await this.fetch(url)
+    const { data } = await this.fetch<{ data: ICoinMetaData }>(url)
     return data
   }
 }

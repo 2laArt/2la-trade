@@ -29,11 +29,11 @@ class CoinsServices extends ApiInstance {
     limit,
   }: ITrendingCoinsParams): Promise<ITrendingCoins[]> => {
     const url = `v1/trending-tokens?limit=${limit}`
-    return await this.fetch<ITrendingCoins>(url)
+    return await this.fetch<ITrendingCoins[]>(url)
   }
   showroom = async (): Promise<IShowroom> => {
     const url = 'v1/showroom/tokens/statistic'
-    const response = await this.fetch(url)
+    const response = await this.fetch<{ data: IShowroom }>(url)
     return response.data
   }
 }
