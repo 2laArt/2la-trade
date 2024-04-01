@@ -1,18 +1,18 @@
 import { formatPercentage, priceWithSuffix } from '@/shared/lib'
 import React from 'react'
 import { coinsServices } from '@/entities/coins-list/model'
-import { NextPage } from 'next'
-import { coinLinks, NavThroughSection } from '@/features/nav-menu'
+import { coinLinks } from '@/features/nav-menu/config/data'
+import { NavThroughSection } from '@/features/nav-menu/ui/nav-through-section'
 import { SectionIntro } from '@/shared/ui/section-intro'
 import { MarketPriceCard } from '@/features/market-price-card'
-const layout: NextPage<{
-  children: React.ReactNode
-}> = async ({ children }) => {
+import { NextPage } from 'next'
+const Intro: NextPage<{ children: React.ReactNode }> = async ({ children }) => {
   const { market_cap, market_cap_change_rate, samples } =
     await coinsServices.showroom()
   const marketCapPrices = samples.map((i) => i.market_cap)
   const marketCap = priceWithSuffix(market_cap, '$')
   const changeRate = formatPercentage(market_cap_change_rate)
+
   return (
     <div className="relative">
       <div className="grid md:grid-cols-2 gap-10 items-center">
@@ -34,12 +34,12 @@ const layout: NextPage<{
           percent={market_cap_change_rate}
         />
       </div>
-      <div className="sticky bg-background top-[73px] pl-0 p-5 my-7 z-10">
+      <div className="sticky top-[73px] my-7 z-10">
         <NavThroughSection links={coinLinks} />
       </div>
-
       {children}
     </div>
   )
 }
-export default layout
+
+export default Intro
