@@ -1,15 +1,26 @@
-import { ColumnDef } from '@tanstack/react-table'
+import { type ColumnDef } from '@tanstack/react-table'
 import { Button, Checkbox, Percentage, TokenIcon } from '@/shared/ui'
 import { formatToCurrency, priceWithSuffix } from '@/shared/lib'
 import React from 'react'
 import { SmallChart } from '@/features/small-chart'
 import { type ITopMovers } from '@/entities/coins-list'
 import { ColumnFilterButton } from '@/features/table-section'
+import { SwitchCoinInCart } from '@/features/cart/ui/switch-coin-in-cart'
+import type { ICreationCoin, IUserCart } from '@/entities/cart/model'
 
-export const coinColumns: ColumnDef<Partial<ITopMovers>>[] = [
+export const getCoinColumns = (
+  cart?: IUserCart
+): ColumnDef<Partial<ITopMovers>>[] => [
   {
     id: 'count',
-    accessorFn: ({ rank, token_id }) => ({ rank, token_id }),
+    accessorFn: ({ rank, token_id, name, slug, symbol, usd_price }) => ({
+      rank,
+      token_id,
+      name,
+      slug,
+      symbol,
+      usd_price,
+    }),
     enableHiding: false,
     sortingFn: (rowA, rowB, columnId) => {
       const rankA = (rowA.getValue(columnId) as Partial<ITopMovers>).rank
@@ -24,17 +35,19 @@ export const coinColumns: ColumnDef<Partial<ITopMovers>>[] = [
     },
     header: ({ column }) => <ColumnFilterButton column={column} text="#" />,
     cell: ({ row }) => {
-      const { rank, token_id } = row.getValue('count') as Partial<ITopMovers>
+      const { rank, token_id, name, prices, slug, symbol, usd_price } =
+        row.getValue('count') as Partial<ITopMovers>
+      const coin: ICreationCoin = {
+        name: name || '',
+        price: usd_price || 0,
+        slug: slug || '',
+        symbol: symbol || '',
+        tokenId: token_id || 0,
+      }
+
       return (
         <div className="capitalize flex items-center gap-2">
-          <Checkbox
-            size="lg"
-            className="max-sm:w-4 z-[2]"
-            variant="star"
-            checked={row.getIsSelected()}
-            onCheckedChange={(value) => row.toggleSelected(!!value)}
-            aria-label="Select row"
-          />
+          {cart && <SwitchCoinInCart coin={coin} cart={cart} />}
           {rank || token_id}
         </div>
       )
