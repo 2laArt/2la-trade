@@ -37,7 +37,8 @@ export const useLoadTable = <R extends Object>({
       return
     }
     columns.map((column) => column.toggleVisibility(true))
-  }, [isMobile, is1110, columns, isLoadingTable, mobileCols, laptopCols])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMobile, is1110, isLoadingTable])
 
   return isLoadingTable
 }
