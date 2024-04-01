@@ -14,7 +14,7 @@ const checkboxVariants = cva(
         default:
           'border shadow border-primary bg-transparent data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground',
         blue: 'border shadows border-primary bg-transparent data-[state=checked]:bg-blue-600  data-[state=checked]:text-white',
-        star: 'data-[state=checked]:fill-yellow-500 dark:text-white text-zinc-400 fill-transparent data-[state=checked]:text-yellow-300 data-[state=checked]:dark:text-yellow-300',
+        star: 'data-[state=checked]:fill-yellow-500 dark:text-white hover:text-yellow-500/80 text-zinc-400 fill-transparent data-[state=checked]:text-yellow-300 data-[state=checked]:dark:text-yellow-300',
       },
       size: {
         default: 'h-4 w-4',
