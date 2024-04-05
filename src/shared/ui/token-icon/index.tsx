@@ -27,7 +27,13 @@ export const TokenIcon: FC<{
   return (
     <span className={cn('inline-block', className)}>
       {iconSrc ? (
-        <NextImage alt={`${slug} icon`} src={iconSrc} width={40} height={40} />
+        <NextImage
+          alt={`${slug} icon`}
+          priority
+          src={iconSrc}
+          width={40}
+          height={40}
+        />
       ) : (
         <div
           style={{
