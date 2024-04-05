@@ -63,7 +63,7 @@ model Coin {
   name      String?
   symbol    String?
   slug      String
-  price     Int?
+  price     String?
   createdAt DateTime   @default(now())
   carts     UserCart[]
   UserCoin  UserCoin[]
