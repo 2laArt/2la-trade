@@ -21,4 +21,5 @@ export const paths = {
   nftSlug: (slug: string, blockchain: number) =>
     `/nft/${slug}?blockchain=${blockchain}`,
   nftWatch: '/nft/whale-watch',
+  tickers: '/tickers',
 }
