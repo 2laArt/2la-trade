@@ -20,17 +20,7 @@ export const createNftColumns = (symbol: string): ColumnDef<INft>[] => [
     cell: ({ row }) => {
       const { index, slug } = row.getValue('COUNT') as INft
       return (
-        <div className="capitalize flex items-center gap-2">
-          <Checkbox
-            size="lg"
-            className="max-sm:w-4 z-[2]"
-            variant="star"
-            checked={row.getIsSelected()}
-            onCheckedChange={(value) => row.toggleSelected(!!value)}
-            aria-label="Select row"
-          />
-          {index}
-        </div>
+        <div className="capitalize flex items-center gap-2 ml-2">{index}</div>
       )
     },
   },
@@ -87,14 +77,16 @@ export const createNftColumns = (symbol: string): ColumnDef<INft>[] => [
         'FLOOR PRICE'
       ) as INft
       return (
-        <div className="inline-flex gap-2">
-          <span>
-            {formatToCurrency(+floor_price, {
-              maximumFractionDigits: 2,
-            })}{' '}
-          </span>
+        <div className="inline-flex gap-2 pl-2 max-sm:flex-col">
+          <div>
+            <span>
+              {formatToCurrency(+floor_price, {
+                maximumFractionDigits: 2,
+              })}
+            </span>
 
-          <span>{symbol}</span>
+            <span>{symbol}</span>
+          </div>
           <Percentage percent={+price_change_7d} />
         </div>
       )
