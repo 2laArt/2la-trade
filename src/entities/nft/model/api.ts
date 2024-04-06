@@ -10,6 +10,7 @@ import type {
   INftStatistic,
   INftStatisticParams,
   INft,
+  INftWhalesParams,
 } from './types'
 
 const baseUrl = `${process.env.NEXT_PUBLIC_CRYPTO_COM_URL}/nft`
@@ -59,9 +60,9 @@ class NFTServices extends ApiInstance {
     const { data } = await this.fetch<{ data: INftSocialInform }>(url)
     return data
   }
-  whales = async (params: INftBySlugParams): Promise<INftWhalesWatch> => {
+  whales = async (params: INftWhalesParams): Promise<INftWhalesWatch> => {
     const searchParams = this.getSearchParams(params)
-    const url = `/v1/whales?page=1&limit=10`
+    const url = `/v1/whales?${searchParams}`
     return await this.fetch(url)
   }
 }

@@ -31,7 +31,7 @@ export interface ICreationCoin {
   name: string
   symbol: string
   slug: string
-  price: number
+  price: string
 }
 
 export interface IUserCartInfo {
