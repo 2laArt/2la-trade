@@ -5,6 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
   Sheet,
+  SheetClose,
   SheetContent,
   SheetTrigger,
 } from '@/shared/ui'
@@ -32,12 +33,10 @@ export const NavMenuMobile = () => {
               <AccordionContent>
                 <div className="flex flex-col items-end">
                   {nftNavLinks.map((link) => (
-                    <Link
-                      href={link.href}
-                      key={link.href}
-                      className="flex gap-4  items-center justify-end font-medium text-sm py-3"
-                    >
-                      {link.title} <Link2Icon />
+                    <Link href={link.href} key={link.href}>
+                      <SheetClose className="flex gap-4  items-center justify-end font-medium text-sm py-3">
+                        {link.title} <Link2Icon />
+                      </SheetClose>
                     </Link>
                   ))}
                 </div>
@@ -51,22 +50,23 @@ export const NavMenuMobile = () => {
                 <div className="flex flex-col items-end">
                   {coinLinks.map((link) => (
                     <Link
-                      href={link.href}
                       key={link.href}
-                      className="flex gap-4  items-center justify-end font-medium text-sm py-3"
+                      href={link.href}
+                      className="flex gap-4 items-center justify-end font-medium text-sm py-3"
                     >
-                      {link.title} <Link2Icon />
+                      <SheetClose>{link.title}</SheetClose>
+                      <Link2Icon />
                     </Link>
                   ))}
                 </div>
               </AccordionContent>
             </AccordionItem>
           </Accordion>
-          <Link
-            href={paths.trade}
-            className="flex gap-4 items-center justify-end border-b font-medium text-sm py-4"
-          >
-            Trade <Link2Icon />
+
+          <Link href={paths.trade} className="block w-full float-end border-b">
+            <SheetClose className="flex w-full gap-4 ml-auto items-center justify-end font-medium text-sm py-4">
+              Trade <Link2Icon />
+            </SheetClose>
           </Link>
         </nav>
       </SheetContent>

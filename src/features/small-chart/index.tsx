@@ -20,8 +20,8 @@ export const SmallChart: React.FC<IChartProps> = ({
 
   const strokeColor =
     percent > 0
-      ? 'stroke-green-500 dark:stroke-green-600'
-      : 'stroke-red-600 dark:stroke-red-700'
+      ? 'stroke-green-500 dark:stroke-green-600 fill-green-400/10'
+      : 'stroke-red-600 dark:stroke-red-700 fill-red-400/10'
 
   React.useEffect(() => {
     if (!ref.current) return
@@ -29,7 +29,7 @@ export const SmallChart: React.FC<IChartProps> = ({
     setPoints(pointsSrt)
   }, [ref, prices])
   return (
-    <div className="relative">
+    <div className="relative inline-block overflow-hidden">
       {!points && (
         <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
           <Spinner size={40} />
@@ -38,15 +38,17 @@ export const SmallChart: React.FC<IChartProps> = ({
       <svg
         ref={ref}
         xmlns="http://www.w3.org/2000/svg"
-        version="1.1"
-        className={cn('inline-block w-full h-full', strokeColor, className)}
+        className={cn(
+          'inline-block w-full h-full -mx-1',
+          strokeColor,
+          className
+        )}
         preserveAspectRatio="none"
       >
         <polyline
           points={points}
           strokeLinecap="round"
           strokeWidth="1.4"
-          fill="none"
           vectorEffect="non-scaling-stroke"
         ></polyline>
       </svg>

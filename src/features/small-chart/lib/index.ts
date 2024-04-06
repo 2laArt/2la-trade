@@ -17,11 +17,11 @@ export const getPoints = ({
 
   const range = max - min
   const step = width / arr.length
-  let points = ''
+  let points = `0 ${height}`
   for (let i = 0; i < arr.length; i++) {
     const x = Math.floor(i * step)
     const y = Math.floor(((max - arr[i]) / range) * height)
-    points += `${!!i ? ',' : ''} ${x} ${y}`
+    points += `, ${x} ${y}`
   }
-  return points
+  return `${points}, ${width} ${height}`
 }
