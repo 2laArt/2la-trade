@@ -1,7 +1,7 @@
 import { nftServices } from '@/entities/nft/model'
 import { SectionIntro } from '@/shared/ui/section-intro'
 import { IntroSectionNftCollection } from '@/widget/intro-section-nft-collection'
-import { NftTable } from '@/widget/nft-table'
+import { NftTableCollections } from '@/widget/nft-table'
 import { type NextPage } from 'next'
 import React from 'react'
 
@@ -37,7 +37,7 @@ const NftEthereum: NextPage<{
         </SectionIntro>
       </div>
       <IntroSectionNftCollection blockchain={blockchain} />
-      <NftTable
+      <NftTableCollections
         symbol={symbol}
         isLoading={false}
         limit={limit}
