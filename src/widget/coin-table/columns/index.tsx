@@ -39,7 +39,7 @@ export const getCoinColumns = (
         row.getValue('count') as Partial<ITopMovers>
       const coin: ICreationCoin = {
         name: name || '',
-        price: usd_price || 0,
+        price: usd_price?.toString() || '0',
         slug: slug || '',
         symbol: symbol || '',
         tokenId: token_id || 0,

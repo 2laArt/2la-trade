@@ -12,7 +12,7 @@ const Main = () => {
   const { subscribeToUpdate } = useTickersSocket(updateTicker)
   const isMount = React.useRef(true)
   React.useEffect(() => {
-    if (!tickers.length && userCart) {
+    if (!tickers.length && userCart?.data.coins.length) {
       const coins = userCart.data.coins
       let favorites: ITicker[] = []
       for (let i = 0; i < coins.length; i++) {
@@ -33,11 +33,15 @@ const Main = () => {
       subscribeToUpdate(symbols)
     }
   }, [subscribeToUpdate, tickers])
-  return (
+
+  return !!tickers.length ? (
     <div className="grid lg:grid-cols-2 [&>*]:w-full grid-cols-1 gap-5">
-      {!!tickers.length &&
-        tickers.map((item) => <Ticker ticker={item} key={item.coin.id} />)}
+      {tickers.map((item) => (
+        <Ticker ticker={item} key={item.coin.id} />
+      ))}
     </div>
+  ) : (
+    <h6 className="text-center text-2xl">No Traceable Coins</h6>
   )
 }
 

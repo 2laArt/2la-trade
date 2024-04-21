@@ -28,7 +28,9 @@ export const useSwitchCartCoin = ({
     isSuccess: successRemove,
   } = useMutationRemoveFromCart(userId)
 
-  const foundCoin = cart.data.coins.find((item) => item.coin.slug === coin.slug)
+  const foundCoin = cart.data.coins.find(
+    (item) => item?.coin?.slug === coin.slug
+  )
   const mutate = () =>
     foundCoin ? removeFromCart(foundCoin.id) : addToCart(coin)
   const isPending = pendingAdd || pendingRemove

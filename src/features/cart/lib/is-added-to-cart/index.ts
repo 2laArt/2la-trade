@@ -7,6 +7,7 @@ export const isAddedToCart = ({
   slug: string
   cart: IUserCart
 }): boolean => {
-  const isInCart = cart.data.coins.some((coin) => coin.coin.slug === slug)
+  const isInCart = cart.data.coins.some((coin) => coin?.coin?.slug === slug)
+
   return isInCart
 }
