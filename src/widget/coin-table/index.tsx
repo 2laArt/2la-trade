@@ -8,6 +8,7 @@ import { type ITopMovers } from '@/entities/coins-list'
 import Link from 'next/link'
 import { paths } from '@/shared/routing'
 import { useUserCart } from '@/entities/cart/context'
+import { Suspense } from 'react'
 
 const mobile = ['price']
 const laptop = ['chart', 'market cap']
@@ -19,17 +20,19 @@ export const CoinTable = (
   const { userCart } = useUserCart()
   const coinColumns = getCoinColumns(userCart)
   return (
-    <TableSection
-      columns={coinColumns}
-      laptopCols={laptop}
-      mobileCols={mobile}
-      TableRowLink={({ row }) => (
-        <Link
-          href={getHref(row.original.slug)}
-          className="absolute top-0 left-0 block w-full h-full z-[1]"
-        />
-      )}
-      {...props}
-    />
+    <Suspense>
+      <TableSection
+        columns={coinColumns}
+        laptopCols={laptop}
+        mobileCols={mobile}
+        TableRowLink={({ row }) => (
+          <Link
+            href={getHref(row.original.slug)}
+            className="absolute top-0 left-0 block w-full h-full z-[1]"
+          />
+        )}
+        {...props}
+      />
+    </Suspense>
   )
 }
