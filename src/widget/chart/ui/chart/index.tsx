@@ -17,7 +17,6 @@ export const CanvasChart: React.FC<{
   const is768 = useMediaQuery({
     query: '(max-width: 768px)',
   })
-  console.log('chart render')
 
   const chartDataOptions: ChartData = React.useMemo(
     () => ({

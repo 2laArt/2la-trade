@@ -1,5 +1,5 @@
 import { type ColumnDef } from '@tanstack/react-table'
-import { Button, Checkbox, Percentage, TokenIcon } from '@/shared/ui'
+import { Percentage, TokenIcon } from '@/shared/ui'
 import { formatToCurrency, priceWithSuffix } from '@/shared/lib'
 import React from 'react'
 import { SmallChart } from '@/features/small-chart'
@@ -7,6 +7,8 @@ import { type ITopMovers } from '@/entities/coins-list'
 import { ColumnFilterButton } from '@/features/table-section'
 import { SwitchCoinInCart } from '@/features/cart/ui/switch-coin-in-cart'
 import type { ICreationCoin, IUserCart } from '@/entities/cart/model'
+import Link from 'next/link'
+import { paths } from '@/shared/routing'
 
 export const getCoinColumns = (
   cart?: IUserCart
@@ -194,12 +196,14 @@ export const getCoinColumns = (
       return (
         <div className="text-right">
           {!!value && (
-            <Button
-              className="bg-blue-600 max-sm:text-xs max-sm:px-2 text-white relative z-[2]"
-              variant={'outline'}
+            <Link
+              href={paths.trade}
+              className={
+                'block py-2 px-3 text-center rounded-sm bg-blue-600 hover:scale-[0.98] max-sm:text-xs max-sm:px-2 text-white relative z-[2]'
+              }
             >
               Trade
-            </Button>
+            </Link>
           )}
         </div>
       )
