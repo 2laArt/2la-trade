@@ -1,12 +1,15 @@
 import { cn } from '@/shared/lib'
 import { Button } from '@/shared/ui'
 import { GitHubLogoIcon } from '@radix-ui/react-icons'
-import { signIn } from 'next-auth/react'
+import { BuiltInProviderType } from 'next-auth/providers/index'
+import { LiteralUnion, signIn } from 'next-auth/react'
 import React from 'react'
 
 const callbackUrl = process.env.NEXT_PUBLIC_NEXTAUTH_URL
-
 export const SingInSection: React.FC = () => {
+  const handler = (provider: LiteralUnion<BuiltInProviderType>) => {
+    signIn(provider, { callbackUrl })
+  }
   return (
     <section
       className={cn(
@@ -23,7 +26,7 @@ export const SingInSection: React.FC = () => {
           type="button"
           variant={'auth'}
           size={'full'}
-          onClick={() => signIn('google', { callbackUrl })}
+          onClick={() => handler('google')}
         >
           <span
             className={
@@ -37,12 +40,29 @@ export const SingInSection: React.FC = () => {
           </span>
           <span>continua with google</span>
         </Button>
+
+        <Button
+          className={cn('bg-teal-800 my-2 flex gap-2')}
+          type="button"
+          variant={'auth'}
+          size={'full'}
+          onClick={() => handler('yandex')}
+        >
+          <span
+            className={
+              'font-bold w-5 h-5 grid place-items-center text-base bg-white text-red-700 leading-3  p-1 rounded-full'
+            }
+          >
+            <span className="pl-[1px] pt[1px]">Y</span>
+          </span>
+          <span>continua with yandex</span>
+        </Button>
         <Button
           className={cn('hover:bg-cyan-800 bg-cyan-800 my-2 flex gap-2')}
           type="button"
           variant={'auth'}
           size={'full'}
-          onClick={() => signIn('github', { callbackUrl })}
+          onClick={() => handler('github')}
         >
           <GitHubLogoIcon />
           <span> continua with github</span>
