@@ -2,7 +2,8 @@ export {
   TickerRow,
   TickerWidgetTitle,
   TickerWidget,
-  TickerDrawer,
   TickerHeader,
+  TickerPricesList,
 } from './samples'
 export { TickerSkeleton } from './ticker-skeleton'
+export { TickerDrawer } from './ticker-drawer'

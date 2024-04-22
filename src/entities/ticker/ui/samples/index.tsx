@@ -1,4 +1,5 @@
 'use client'
+import { SwitchCoinInCart } from '@/features/cart/ui/switch-coin-in-cart'
 import { cn } from '@/shared/lib'
 import {
   Drawer,
@@ -85,32 +86,31 @@ const TickerWidget: React.FC<{
     </div>
   )
 }
-const TickerDrawer: React.FC<{
-  title: React.ReactNode
-  children: React.ReactNode
-  className?: string
-}> = ({ children, title, className }) => {
+const TickerPricesList: React.FC<{
+  prices: number[]
+}> = ({ prices }) => {
   return (
-    <Drawer>
-      <DrawerTrigger
-        className={cn(
-          'bg-blue-700 p-2 rounded-md text-white text-sm transition-colors hover:bg-blue-800',
-          className
-        )}
-      >
-        Show Chart
-      </DrawerTrigger>
-      <DrawerContent className="justify-between">
-        <div className="max-w-3xl w-full flex flex-col mx-auto">
-          <DrawerHeader>
-            <DrawerTitle asChild>{title}</DrawerTitle>
-          </DrawerHeader>
-        </div>
-        <div className="max-w-3xl w-full flex flex-col px-1 mx-auto">
-          <DrawerDescription asChild>{children}</DrawerDescription>
-        </div>
-      </DrawerContent>
-    </Drawer>
+    <div className="max-h-[270px] p-2 h-full max-w-28 items-center flex  flex-col gap-1 text-xs text-white top-0 left-0 ">
+      {prices
+        .reduceRight(
+          (acc: React.ReactNode[], price, idx, origen) => [
+            ...acc,
+            <span
+              className={cn(
+                'text-ellipsis whitespace-nowrap overflow-x-hidden  max-w-24',
+                origen[idx - 1] > price
+                  ? 'dark:text-red-400 text-red-600'
+                  : 'dark:text-green-400 text-green-600'
+              )}
+              key={idx}
+            >
+              {price}
+            </span>,
+          ],
+          []
+        )
+        .slice(0, 13)}
+    </div>
   )
 }
 
@@ -118,6 +118,6 @@ export {
   TickerRow,
   TickerWidgetTitle,
   TickerWidget,
-  TickerDrawer,
   TickerHeader,
+  TickerPricesList,
 }
