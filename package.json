@@ -1,74 +1,76 @@
 {
-	"name": "crypto-trading",
-	"version": "0.1.0",
-	"private": true,
-	"scripts": {
-		"dev": "next dev",
-		"build": "next build",
-		"start": "next start",
-		"lint": "next lint"
-	},
-	"husky": {
-		"hooks": {
-			"commit-msg": "commitlint -E HUSKY_GIT_PARAMS -g './config/git/commitlint.js'"
-		}
-	},
-	"config": {
-		"commitizen": {
-			"path": "node_modules/cz-customizable"
-		},
-		"cz-customizable": {
-			"config": "config/git/commitizen.js"
-		}
-	},
-	"dependencies": {
-		"@auth/prisma-adapter": "^1.5.0",
-		"@prisma/client": "^5.11.0",
-		"@radix-ui/react-accordion": "^1.1.2",
-		"@radix-ui/react-avatar": "^1.0.4",
-		"@radix-ui/react-checkbox": "^1.0.4",
-		"@radix-ui/react-dialog": "^1.0.5",
-		"@radix-ui/react-dropdown-menu": "^2.0.6",
-		"@radix-ui/react-icons": "^1.3.0",
-		"@radix-ui/react-navigation-menu": "^1.1.4",
-		"@radix-ui/react-slot": "^1.0.2",
-		"@tanstack/react-query": "^5.18.1",
-		"@tanstack/react-table": "^8.11.8",
-		"chart.js": "^4.4.2",
-		"class-variance-authority": "^0.7.0",
-		"clsx": "^2.1.0",
-		"embla-carousel-autoplay": "^8.0.0-rc23",
-		"embla-carousel-react": "^8.0.0-rc23",
-		"lucide-react": "^0.323.0",
-		"next": "14.1.0",
-		"next-auth": "^4.24.7",
-		"next-themes": "^0.2.1",
-		"nextjs-toploader": "^1.6.6",
-		"react": "^18",
-		"react-dom": "^18",
-		"react-hook-form": "^7.51.1",
-		"react-responsive": "^9.0.2",
-		"vaul": "^0.9.0"
-	},
-	"devDependencies": {
-		"@commitlint/cli": "^18.6.0",
-		"@tailwindcss/container-queries": "^0.1.1",
-		"@types/node": "^20",
-		"@types/react": "^18",
-		"@types/react-dom": "^18",
-		"autoprefixer": "^10.0.1",
-		"cz-customizable": "^7.0.0",
-		"eslint": "^8",
-		"eslint-config-next": "14.1.0",
-		"eslint-config-prettier": "^9.1.0",
-		"husky": "^9.0.10",
-		"postcss": "^8",
-		"prettier": "^3.2.5",
-		"prettier-plugin-tailwindcss": "^0.5.11",
-		"prisma": "^5.11.0",
-		"tailwind-merge": "^2.2.1",
-		"tailwindcss": "^3.3.0",
-		"tailwindcss-animate": "^1.0.7",
-		"typescript": "^5"
-	}
+  "name": "crypto-trading",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "migrate:deploy": "prisma migrate resolve --applied 20240403133127_y",
+    "postinstall": "prisma generate",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS -g './config/git/commitlint.js'"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": "config/git/commitizen.js"
+    }
+  },
+  "dependencies": {
+    "@auth/prisma-adapter": "^1.5.0",
+    "@prisma/client": "^5.11.0",
+    "@radix-ui/react-accordion": "^1.1.2",
+    "@radix-ui/react-avatar": "^1.0.4",
+    "@radix-ui/react-checkbox": "^1.0.4",
+    "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-dropdown-menu": "^2.0.6",
+    "@radix-ui/react-icons": "^1.3.0",
+    "@radix-ui/react-navigation-menu": "^1.1.4",
+    "@radix-ui/react-slot": "^1.0.2",
+    "@tanstack/react-query": "^5.18.1",
+    "@tanstack/react-table": "^8.11.8",
+    "chart.js": "^4.4.2",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.0",
+    "embla-carousel-autoplay": "^8.0.0-rc23",
+    "embla-carousel-react": "^8.0.0-rc23",
+    "lucide-react": "^0.323.0",
+    "next": "14.1.0",
+    "next-auth": "^4.24.7",
+    "next-themes": "^0.2.1",
+    "nextjs-toploader": "^1.6.6",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-hook-form": "^7.51.1",
+    "react-responsive": "^9.0.2",
+    "vaul": "^0.9.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^18.6.0",
+    "@tailwindcss/container-queries": "^0.1.1",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "cz-customizable": "^7.0.0",
+    "eslint": "^8",
+    "eslint-config-next": "14.1.0",
+    "eslint-config-prettier": "^9.1.0",
+    "husky": "^9.0.10",
+    "postcss": "^8",
+    "prettier": "^3.2.5",
+    "prettier-plugin-tailwindcss": "^0.5.11",
+    "prisma": "^5.11.0",
+    "tailwind-merge": "^2.2.1",
+    "tailwindcss": "^3.3.0",
+    "tailwindcss-animate": "^1.0.7",
+    "typescript": "^5"
+  }
 }
