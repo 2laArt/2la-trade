@@ -62,10 +62,6 @@ export const TableSection = <R extends Object>({
     mobileCols,
   })
 
-  React.useEffect(() => {
-    console.log('table render')
-  })
-
   return (
     <div className="w-full mt-10">
       {isLoadingTable || isLoading ? (

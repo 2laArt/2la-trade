@@ -4,11 +4,13 @@ import { type ITickerSuccess } from '@/entities/ticker/model'
 import {
   TickerDrawer,
   TickerHeader,
+  TickerPricesList,
   TickerRow,
   TickerSkeleton,
   TickerWidget,
   TickerWidgetTitle,
 } from '@/entities/ticker/ui'
+import { DeleteCoin } from '@/features/cart/ui/delete-coin'
 
 import { formatDate, percentDifference } from '@/shared/lib'
 import { ChartBars } from '@/shared/ui'
@@ -19,7 +21,8 @@ export const TickerSocket: React.FC<{
   coin: ICoinDB
   info?: ITickerSuccess
   prices: number[]
-}> = ({ coin, info, prices }) => {
+  userId: string
+}> = ({ coin, info, prices, userId }) => {
   const price = prices[prices.length - 1]
   const percent = percentDifference(Number(price), Number(coin.price))
   const isProfit = percent > 0
@@ -76,10 +79,15 @@ export const TickerSocket: React.FC<{
               </TickerRow>
             </TickerWidget>
           </div>
-
-          <TickerDrawer className="mt-3" title={header}>
-            <ChartBars limit={TICKER.MAX_TICKER_PRICES} prices={prices} />
-          </TickerDrawer>
+          <div className="flex justify-between items-center">
+            <TickerDrawer className="mt-3" title={header}>
+              <div className="flex items-end">
+                <TickerPricesList prices={prices} />
+                <ChartBars limit={TICKER.MAX_TICKER_PRICES} prices={prices} />
+              </div>
+            </TickerDrawer>
+            {/* <DeleteCoin userCoinId={coin.id} userId={userId} /> */}
+          </div>
         </>
       ) : (
         <TickerSkeleton />

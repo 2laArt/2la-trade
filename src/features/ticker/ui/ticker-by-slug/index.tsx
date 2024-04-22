@@ -3,6 +3,7 @@ import { TICKER } from '@/entities/ticker/config'
 import {
   TickerDrawer,
   TickerHeader,
+  TickerPricesList,
   TickerRow,
   TickerSkeleton,
   TickerWidget,
@@ -15,10 +16,12 @@ import React from 'react'
 
 import { useQueryCoinBySlug } from '@/entities/coin/model'
 import { formatDate, percentDifference } from '@/shared/lib'
+import { DeleteCoin } from '@/features/cart/ui/delete-coin'
 
 export const TickerBySlug: React.FC<{
   cardCoin: ICoinDB
-}> = ({ cardCoin }) => {
+  userId: string
+}> = ({ cardCoin, userId }) => {
   const { data: coin } = useQueryCoinBySlug(cardCoin.slug)
   const percent = coin
     ? percentDifference(Number(coin.usd_price), Number(cardCoin.price))
@@ -71,9 +74,17 @@ export const TickerBySlug: React.FC<{
               <TickerRow label={'BTC 30d'}>{coin.btc_volume_24h}</TickerRow>
             </TickerWidget>
           </div>
-          <TickerDrawer className="mt-3" title={header}>
-            <ChartBars limit={TICKER.MAX_TICKER_PRICES} prices={prices} />
-          </TickerDrawer>
+
+          <div className="flex justify-between items-center">
+            <TickerDrawer className="mt-3" title={header}>
+              <div className="flex items-end">
+                <TickerPricesList prices={prices} />
+
+                <ChartBars limit={TICKER.MAX_TICKER_PRICES} prices={prices} />
+              </div>
+            </TickerDrawer>
+            {/* <DeleteCoin userCoinId={cardCoin.id} userId={userId} /> */}
+          </div>
         </>
       ) : (
         <TickerSkeleton />

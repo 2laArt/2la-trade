@@ -14,7 +14,7 @@ const buttonVariants = cva(
         outline:
           'card border border-input hover:bg-accent hover:text-accent-foreground',
         secondary:
-          'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+          'bg-blue-600 hover:scale-[0.98] max-sm:text-xs max-sm:px-2 text-white relative z-[2]',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
         auth: 'rounded text-white uppercase border-0 transition-transform hover:scale-[0.98] active:scale-[0.97]',
