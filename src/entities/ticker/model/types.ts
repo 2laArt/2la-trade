@@ -28,6 +28,7 @@ export interface ITickerSuccess {
 
 export interface ITicker {
   key: string
+  coinCartId: string
   coin: ICoinDB
   info?: ITickerSuccess
   prices: number[]

@@ -20,13 +20,16 @@ import React from 'react'
 export const TickerSocket: React.FC<{
   coin: ICoinDB
   info?: ITickerSuccess
+  coinCartId: string
   prices: number[]
   userId: string
-}> = ({ coin, info, prices, userId }) => {
+  callback: Function
+}> = ({ coin, info, prices, userId, coinCartId, callback }) => {
   const price = prices[prices.length - 1]
   const percent = percentDifference(Number(price), Number(coin.price))
   const isProfit = percent > 0
   const variant = isProfit ? 'green' : 'red'
+  const handler = () => callback([coin.symbol])
   const header = (
     <TickerHeader
       name={coin.name || ''}
@@ -86,7 +89,11 @@ export const TickerSocket: React.FC<{
                 <ChartBars limit={TICKER.MAX_TICKER_PRICES} prices={prices} />
               </div>
             </TickerDrawer>
-            {/* <DeleteCoin userCoinId={coin.id} userId={userId} /> */}
+            <DeleteCoin
+              userCoinId={coinCartId}
+              userId={userId}
+              callback={handler}
+            />
           </div>
         </>
       ) : (

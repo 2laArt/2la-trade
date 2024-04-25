@@ -21,7 +21,8 @@ import { DeleteCoin } from '@/features/cart/ui/delete-coin'
 export const TickerBySlug: React.FC<{
   cardCoin: ICoinDB
   userId: string
-}> = ({ cardCoin, userId }) => {
+  coinCartId: string
+}> = ({ cardCoin, userId, coinCartId }) => {
   const { data: coin } = useQueryCoinBySlug(cardCoin.slug)
   const percent = coin
     ? percentDifference(Number(coin.usd_price), Number(cardCoin.price))
@@ -79,11 +80,10 @@ export const TickerBySlug: React.FC<{
             <TickerDrawer className="mt-3" title={header}>
               <div className="flex items-end">
                 <TickerPricesList prices={prices} />
-
                 <ChartBars limit={TICKER.MAX_TICKER_PRICES} prices={prices} />
               </div>
             </TickerDrawer>
-            {/* <DeleteCoin userCoinId={cardCoin.id} userId={userId} /> */}
+            <DeleteCoin userCoinId={coinCartId} userId={userId} />
           </div>
         </>
       ) : (

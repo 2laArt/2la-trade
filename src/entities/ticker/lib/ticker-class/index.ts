@@ -1,4 +1,4 @@
-import type { ICoinDB } from '@/entities/cart/model'
+import type { ICoinDB, IUserCartCoin } from '@/entities/cart/model'
 import type { ITickerSuccess } from '../../model'
 
 export class TickerClass {
@@ -8,8 +8,10 @@ export class TickerClass {
   public waring?: string
   public info?: ITickerSuccess
   public lastUpdate: number
-  constructor(coin: ICoinDB) {
+  public coinCartId: string
+  constructor(coin: ICoinDB, coinCartId: string) {
     this.key = coin.symbol || ''
+    this.coinCartId = coinCartId
     this.coin = coin
     this.prices = []
     this.waring

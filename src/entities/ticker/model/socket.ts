@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+'use client'
 import React from 'react'
 import { TICKER } from '../config'
 import type { UpdateTickersType } from './types'
@@ -9,7 +10,6 @@ export const useTickersSocket = (tickersHandler: UpdateTickersType) => {
 
   const onMessage = (e: MessageEvent<string>) => {
     const data = JSON.parse(e.data)
-
     if (data.type === TICKER.CHANNEL) {
       const key: string = data?.product_id.split('-')[0]
       tickersHandler(key, data)
@@ -23,7 +23,6 @@ export const useTickersSocket = (tickersHandler: UpdateTickersType) => {
   // send
   const sendMessage = (message: Object) => {
     const msg = JSON.stringify(message)
-
     if (ws.current && ws.current.readyState === WebSocket.OPEN) {
       ws.current.send(msg)
     }
@@ -53,6 +52,7 @@ export const useTickersSocket = (tickersHandler: UpdateTickersType) => {
       product_ids: tickers,
       channels: [TICKER.CHANNEL],
     }
+
     sendMessage(msg)
   }
   const getTickers = (symbols: string[], currency: string = TICKER.CURRENCY) =>
@@ -60,15 +60,12 @@ export const useTickersSocket = (tickersHandler: UpdateTickersType) => {
 
   const closeSocket = () => {
     if (ws.current?.readyState === WebSocket.OPEN) {
-      console.log('webSocket closed')
-
       ws.current?.close()
     }
   }
   React.useEffect(() => {
     if (!ws.current) {
       ws.current = new WebSocket(WS_URL)
-      return
     }
 
     ws.current.addEventListener('message', onMessage)
