@@ -6,11 +6,11 @@ import { Logo, NavMenuDesktop } from '@/features/nav-menu'
 import { useUserSession } from '@/features/auth/lib'
 import { useMediaQuery } from 'react-responsive'
 import { NavMenuMobile } from '@/features/nav-menu/ui'
-
+import { redirect } from 'next/navigation'
 export const MainLayout: React.FC<
   React.PropsWithChildren<{ variant: 'auth' | 'private' | 'public' }>
 > = ({ children, variant }) => {
-  const { data: session } = useUserSession()
+  const { data: session, status } = useUserSession()
   const [isLoaded, setIsLoaded] = React.useState(false)
   const isMobile = useMediaQuery({
     query: '(max-width: 768px)',
@@ -18,6 +18,10 @@ export const MainLayout: React.FC<
   React.useEffect(() => {
     setIsLoaded(true)
   }, [])
+  if (variant === 'private' && !session && status !== 'loading')
+    return redirect('/')
+  if (variant === 'auth' && session && status === 'authenticated')
+    return redirect('/')
   const isAuth = variant === 'auth'
   return (
     <main className="min-h-[100svh] ">
