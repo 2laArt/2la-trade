@@ -57,7 +57,7 @@ const SkeletonCards: React.FC = () => {
       {Array.from({ length: 4 }).map((_, idx) => (
         <CarouselItem
           key={idx}
-          className="h-full shrink-1 ml-2 grow-1 basis-1/2 md:basis-1/3 lg:basis-1/4"
+          className="h-full pl-2 shrink-1 grow-1 basis-1/2 md:basis-1/3 lg:basis-1/4"
         >
           <div className="card flex flex-col justify-between h-[152px] p-2 sm:p-5 rounded-sm">
             <div className="flex justify-between items-center">
