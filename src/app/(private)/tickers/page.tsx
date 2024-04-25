@@ -10,22 +10,35 @@ import React from 'react'
 const Main = () => {
   const { userCart } = useUserCart()
   const { updateTicker, setTickers, tickers } = useTickers()
-  const { subscribeToUpdate } = useTickersSocket(updateTicker)
+  const { subscribeToUpdate, unsubscribeToUpdate } =
+    useTickersSocket(updateTicker)
   const isMount = React.useRef(true)
   React.useEffect(() => {
     if (!tickers.length && userCart?.data.coins.length) {
       const coins = userCart.data.coins
+
       let favorites: ITicker[] = []
       for (let i = 0; i < coins.length; i++) {
         if (!!coins[i].coin.symbol) {
-          favorites.push(new TickerClass(coins[i].coin))
+          const ticker = new TickerClass(coins[i].coin, coins[i].id)
+          favorites.push(ticker)
         }
       }
-
       setTickers(favorites)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userCart])
+  }, [setTickers, tickers.length, userCart])
+
+  React.useEffect(() => {
+    const coins = userCart?.data.coins
+    if (!coins?.length || !tickers.length) return
+    if (tickers.length === coins.length) return
+    setTickers((prev) =>
+      prev.filter(
+        (item) => coins.some((el) => el.coin.id === item.coin.id) && item
+      )
+    )
+  }, [setTickers, tickers.length, userCart?.data.coins])
+
   React.useEffect(() => {
     if (tickers.length > 0 && isMount.current) {
       isMount.current = false
@@ -33,7 +46,8 @@ const Main = () => {
       subscribeToUpdate(symbols)
     }
   }, [subscribeToUpdate, tickers])
-  if (isMount.current)
+
+  if (!tickers.length)
     return (
       <div className="grid h-[50vh] place-items-center">
         <Spinner size={50} />
@@ -46,6 +60,7 @@ const Main = () => {
           userId={userCart?.data.userId}
           ticker={item}
           key={item.coin.id}
+          callback={unsubscribeToUpdate}
         />
       ))}
     </div>
